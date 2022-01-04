@@ -14,7 +14,7 @@ def cleanFiles(exiting = False):
     LOGGER.info("files cleared.")
     if exiting:
         try:
-            files = ["PlaylistBot.session", "PlaylistBot.session"]
+            files = ["PlaylistAudioBot.session", "PlaylistAudioBot.session"]
             for it in files:
                 if os.path.isfile(it): os.remove(it)
         except Exception as r:

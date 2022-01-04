@@ -16,7 +16,7 @@ def get_media_info(path):
         fields = json.loads(result)['format']
     except Exception as e:
         LOGGER.info("mediainfo returned empty values.")
-        return 0, "HuzunluArtemis/PlaylistBot", None
+        return 0, "HuzunluArtemis/PlaylistAudioBot", None
     try:
         duration = round(float(fields['duration']))
     except:
@@ -24,7 +24,7 @@ def get_media_info(path):
     try:
         artist = str(fields['tags']['artist'])
     except:
-        artist = "HuzunluArtemis/PlaylistBot"
+        artist = "HuzunluArtemis/PlaylistAudioBot"
     try:
         title = str(fields['tags']['title'])
     except:

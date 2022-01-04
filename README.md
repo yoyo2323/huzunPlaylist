@@ -1,6 +1,6 @@
-# Telegram PlaylistBot
+# Telegram PlaylistAudioBot
 
-## PlaylistBot:
+## PlaylistAudioBot:
 
 🇬🇧 Telegram playlist download bot with ytdl (m4a, only audio)
 
@@ -8,7 +8,7 @@
 
 Demo in Telegram: [@HAPlaylistBot](https://t.me/HAPlaylistBot)
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/HuzunluArtemis/PlaylistBot)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/HuzunluArtemis/PlaylistAudioBot)
 
 ## Features
 <details>
@@ -61,7 +61,7 @@ Demo in Telegram: [@HAPlaylistBot](https://t.me/HAPlaylistBot)
 </a>
 <br>
 <br>
-PlaylistBot is Free Software: You can use, study share and improve it at your
+PlaylistAudioBot is Free Software: You can use, study share and improve it at your
 will. Specifically you can redistribute and/or modify it under the terms of the 
   <a href="https://www.gnu.org/licenses/gpl.html">GNU General Public License</a> 
   as published by the Free Software Foundation, either version 3 of the License, 

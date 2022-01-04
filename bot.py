@@ -15,7 +15,7 @@ if __name__ == '__main__':
     
     plugins = dict(root = 'plugins')
     
-    app = pyrogram.Client("PlaylistBot",
+    app = pyrogram.Client("PlaylistAudioBot",
       workers=343,
       bot_token = Config.BOT_TOKEN,
       api_id = Config.APP_ID,

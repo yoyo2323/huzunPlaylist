@@ -1,11 +1,11 @@
 {
     "name": "telegram playlist download bot with ytdl",
-    "description": "HuzunluArtemis/PlaylistBot",
+    "description": "HuzunluArtemis/PlaylistAudioBot",
     "keywords": [
         "telegram",
         "playlist"
     ],
-    "repository": "https://github.com/HuzunluArtemis/PlaylistBot",
+    "repository": "https://github.com/HuzunluArtemis/PlaylistAudioBot",
     "env": {
         "APP_ID": {
             "description": "Get this value from https://my.telegram.org",

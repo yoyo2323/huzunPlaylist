@@ -39,7 +39,7 @@ class Config(object):
     LOG_COMMAND = [os.environ.get('LOG_COMMAND','log')]
     TG_SPLIT_SIZE = int(os.environ.get("TG_SPLIT_SIZE", "2097151000"))
     MUSIC_COMMAND = [os.environ.get('MUSIC_COMMAND','music')]
-    FLAME_URL = os.environ.get('FLAME_URL','https://github.com/HuzunluArtemis/PlaylistBot')
+    FLAME_URL = os.environ.get('FLAME_URL','https://github.com/HuzunluArtemis/PlaylistAudioBot')
     PING_COMMAND = [os.environ.get('PING_COMMAND','ping')]
     YTDL_DOWNLOAD_FORMAT = os.environ.get('YTDL_DOWNLOAD_FORMAT', 'bestaudio[ext=m4a] / bestaudio')
     botStartTime = time.time() # dont touch
