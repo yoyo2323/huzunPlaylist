@@ -111,7 +111,7 @@ def my_hook(d):
         cp = progress_for_ytdl(downloaded_bytes, toplamBoyut, startTime)
         if not cp: return
 
-        toedit = f"`Şu an / At now:\n\n- Sıra / Quee: {indirilen}/{str(len(urller))}" + \
+        toedit = f"Şu an / At now:\n\n`- Sıra / Quee: {indirilen}/{str(len(urller))}" + \
             "\n- İnen / Downloading: " + os.path.split(os.path.abspath(d['filename']))[1] + \
             "\n- Yüzde / Percent: " + d['_percent_str'] + \
             "\n- Kalan / Remaining: " + d['_eta_str'] + \

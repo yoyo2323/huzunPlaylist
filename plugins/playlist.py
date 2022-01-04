@@ -47,10 +47,12 @@ def playlist(client: Client, message: Message):
 			url = url[1]
 		except IndexError:
 			message.reply(f"🇬🇧 click and read: /help\n🇹🇷 tıkla ve oku: /yardim", quote=True)
+			clearVars()
+			cleanFiles()
 			return
 	else:
 		url = message.reply_to_message.text
-	info = f"{message.from_user.mention()} (`{str(message.from_user.id)}`)\nlink: `{url}`\n\n"
+	info = f"Bilgi / Info:\n\n- user: {message.from_user.mention()} (`{str(message.from_user.id)}`)\n- link: `{url}`\n\n"
 	text = info + "🇹🇷 inceleniyor.\nbu işlem her video için 1 saniye demektir.\neğer 60 videonuz varsa, 60 saniye bekleyin.\n\n"
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
 	indiriliyor: Message = message.reply(text, quote=True)
@@ -159,7 +161,7 @@ def playlist(client: Client, message: Message):
 		f"🇹🇷 indirme süresi 🇬🇧 download time: {ReadableTime(indirmeBitti-indirmeBasladi)}\n" + \
 		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(time.time() - c_time)}\n" + \
 		f"🇹🇷 toplam süre 🇬🇧 total time: {ReadableTime(time.time() - indirmeBasladi)}\n" + \
-		f"{message.from_user.mention()}"
+		f"🇹🇷 toplam dosya 🇬🇧 total file: {toplamarsiv}"
 	indiriliyor.reply_text(texto, quote=True)
 	indiriliyor.edit_text(texto)
 	clearVars()

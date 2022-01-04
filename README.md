@@ -24,7 +24,9 @@ Demo in Telegram: [@PlaylistAudioBot](https://t.me/PlaylistAudioBot)
 - Force Subscribe
 - Video limit (give 0 for unlimited, default 0)
 - Size limit (give 0 for unlimited, default 0)
-- Logger, Pinger
+- Logger
+- Shell
+- Pinger
 </details>
 
 ## Setting up config file
