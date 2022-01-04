@@ -102,7 +102,7 @@ def playlist(client: Client, message: Message):
 	toplamGonderilen = 0
 	for filo in toup:
 		suan = suan + 1
-		kepsin = f'<a href="{Config.FLAME_URL}">🔥</a> {filo}'
+		kepsin = f'<a href="{Config.FLAME_URL}">🔥</a> {filo}\n`{url}`\n`{suan}.{toplamarsiv}`'
 		dosyaYolu = os.path.join(outDir, filo)
 		if os.path.getsize(dosyaYolu) > Config.TG_SPLIT_SIZE:
 			message.reply(f"büyük dosya\ntg size limit:\n\n{filo}", quote=True)
