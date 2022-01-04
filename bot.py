@@ -1,7 +1,6 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
 import logging
-from typing import List
 from config import Config
 import pyrogram
 import logging, os

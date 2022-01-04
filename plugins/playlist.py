@@ -1,7 +1,6 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
-import time, pytz
-from datetime import datetime
+import time
 from pyrogram import Client, filters
 from pyrogram.types.messages_and_media.message import Message
 from pyrogram.errors import FloodWait, RPCError
