@@ -162,8 +162,8 @@ def playlist(client: Client, message: Message):
 		"🇹🇷 yükleme bitti 🇬🇧 done uploading.\n" + \
 		f"🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}\n" + \
 		f"🇹🇷 indirme süresi 🇬🇧 download time: {ReadableTime(indirmeBitti-indirmeBasladi)}\n" + \
-		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(c_time - time.time())}\n" + \
-		f"🇹🇷 toplam süre 🇬🇧 total time: {ReadableTime(indirmeBasladi - time.time())}\n" + \
+		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(time.time() - c_time)}\n" + \
+		f"🇹🇷 toplam süre 🇬🇧 total time: {ReadableTime(time.time() - indirmeBasladi)}\n" + \
 		f"{message.from_user.mention()}", quote=True, 
 	)
 	clearVars()

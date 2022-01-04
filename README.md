@@ -12,6 +12,7 @@ Demo in Telegram: [@PlaylistAudioBot](https://t.me/PlaylistAudioBot)
 
 ## Features
 <details>
+  <summary><b>Click Here For Details</b></summary><br>
 
 - Youtube-DL downloading status
 - Fully customizable progressbar
