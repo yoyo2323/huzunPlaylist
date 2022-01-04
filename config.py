@@ -39,6 +39,7 @@ class Config(object):
     LOG_COMMAND = [os.environ.get('LOG_COMMAND','log')]
     TG_SPLIT_SIZE = int(os.environ.get("TG_SPLIT_SIZE", "2097151000"))
     MUSIC_COMMAND = [os.environ.get('MUSIC_COMMAND','music')]
+    SHELL_COMMAND = [os.environ.get('SHELL_COMMAND','shell')]
     FLAME_URL = os.environ.get('FLAME_URL','https://github.com/HuzunluArtemis/PlaylistAudioBot')
     PING_COMMAND = [os.environ.get('PING_COMMAND','ping')]
     YTDL_DOWNLOAD_FORMAT = os.environ.get('YTDL_DOWNLOAD_FORMAT', 'bestaudio[ext=m4a] / bestaudio')
@@ -51,7 +52,7 @@ class Config(object):
     HELP_COMMANDS = ["start", "help", "about", "yardım", "h", "y"]
     if not BOT_USERNAME.startswith('@'): BOT_USERNAME = '@' + BOT_USERNAME # bu satıra dokunmayın.
     # komutları kopyala
-    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND,MUSIC_COMMAND]
+    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND,MUSIC_COMMAND, SHELL_COMMAND]
     for ComS in AllCom:
         Lier = ComS.copy()
         for p in Lier:
