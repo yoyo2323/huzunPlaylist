@@ -2,9 +2,9 @@
 
 ## PlaylistBot:
 
-🇬🇧 Telegram playlist download bot with ytdl
+🇬🇧 Telegram playlist download bot with ytdl (m4a, only audio)
 
-🇹🇷 Telegram oynatma listesi indirici bot
+🇹🇷 Telegram oynatma listesi indirici bot (m4a, sadece ses)
 
 Demo in Telegram: [@HAPlaylistBot](https://t.me/HAPlaylistBot)
 
