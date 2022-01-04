@@ -1,0 +1,36 @@
+{
+    "name": "telegram playlist download bot with ytdl",
+    "description": "HuzunluArtemis/PlaylistBot",
+    "keywords": [
+        "telegram",
+        "playlist"
+    ],
+    "repository": "https://github.com/HuzunluArtemis/PlaylistBot",
+    "env": {
+        "APP_ID": {
+            "description": "Get this value from https://my.telegram.org",
+            "value": ""
+        },
+        "API_HASH": {
+            "description": "Get this value from https://my.telegram.org",
+            "value": ""
+        },
+        "BOT_TOKEN": {
+            "description": "Telegram bot token. From BotFather",
+            "value": ""
+        },
+        "BOT_USERNAME": {
+            "description": "Read readme",
+            "value": ""
+        },
+        "AUTH_IDS": {
+            "description": "Read readme",
+            "value": "0"
+        },
+        "OWNER_ID": {
+            "description": "Read readme",
+            "value": "0"
+        }
+    },
+    "stack": "container"
+}

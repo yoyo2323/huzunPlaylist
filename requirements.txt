@@ -1,0 +1,5 @@
+Pyrogram
+TgCrypto
+psutil
+yt-dlp
+natsort

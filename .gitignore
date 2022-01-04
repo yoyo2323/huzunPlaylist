@@ -1,0 +1,13 @@
+config.env
+*auth_token.txt
+*.pyc
+data*
+.vscode
+.idea
+*.pickle
+.netrc
+log.txt
+calisiyor.txt
+*.session
+musics/*
+*.session-journal
