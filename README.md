@@ -6,7 +6,7 @@
 
 🇹🇷 Telegram oynatma listesi indirici bot (m4a, sadece ses)
 
-Demo in Telegram: [@HAPlaylistBot](https://t.me/HAPlaylistBot)
+Demo in Telegram: [@PlaylistAudioBot](https://t.me/PlaylistAudioBot)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/HuzunluArtemis/PlaylistAudioBot)
 
@@ -35,7 +35,7 @@ Demo in Telegram: [@HAPlaylistBot](https://t.me/HAPlaylistBot)
 - `APP_ID`: Telegram App ID. Example: `32523453`
 - `API_HASH`: Telegram Api Hash. Example: `asdasdas6d265asd26asd6as1das`
 - `AUTH_IDS`: Auth only some groups or users. If you want public, leave it empty or give `0`. Example: `-100656 56191 -10056561`
-- `BOT_USERNAME`: Your bot's username. without @. Example: `HAPlaylistBot`
+- `BOT_USERNAME`: Your bot's username. without @. Example: `PlaylistAudioBot`
 
 <b>Not Required Variables:</b>
 
