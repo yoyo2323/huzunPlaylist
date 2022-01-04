@@ -156,15 +156,13 @@ def playlist(client: Client, message: Message):
 		toplamGonderilen = toplamGonderilen + os.path.getsize(dosyaYolu)
 		try: os.remove(dosyaYolu)
 		except Exception as v: LOGGER.error(str(v))
-	
-	indiriliyor.reply_text(
-		f"{message.from_user.mention()} ({str(message.from_user.id)}) link: `{url}`\n\n" + \
-		"🇹🇷 yükleme bitti 🇬🇧 done uploading.\n" + \
+	texto = f"{info}🇹🇷 yükleme bitti 🇬🇧 done uploading.\n" + \
 		f"🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}\n" + \
 		f"🇹🇷 indirme süresi 🇬🇧 download time: {ReadableTime(indirmeBitti-indirmeBasladi)}\n" + \
 		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(time.time() - c_time)}\n" + \
 		f"🇹🇷 toplam süre 🇬🇧 total time: {ReadableTime(time.time() - indirmeBasladi)}\n" + \
-		f"{message.from_user.mention()}", quote=True, 
-	)
+		f"{message.from_user.mention()}"
+	indiriliyor.reply_text(texto, quote=True)
+	indiriliyor.edit_text(texto)
 	clearVars()
 	cleanFiles()
