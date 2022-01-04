@@ -27,6 +27,13 @@ LOGGER = logging.getLogger(__name__)
 def playlist(client: Client, message: Message):
 	if not AuthUserCheckSync(message): return
 	if ForceSubSync(client, message) == 400: return
+	# calisma kontrolu
+	if os.path.exists('calisiyor.txt'):
+		message.reply(f"🇹🇷 elleme beni. sonra gel.\n🇬🇧 dont touch me. try again later.\n" +
+		f"{message.from_user.mention()}")
+		return
+	with open('calisiyor.txt', 'w') as writefile: writefile.write("ok")
+	# calisma kontrolu
 	VIDEO_SUFFIXES = ("MKV", "MP4", "MOV", "WMV", "3GP", "MPG", "WEBM", "AVI", "FLV", "M4V", "GIF")
 	AUDIO_SUFFIXES = ("MP3", "M4A", "M4B", "FLAC", "WAV", "AIF", "OGG", "AAC", "DTS", "MID", "AMR", "MKA")
 	IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "WEBP", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO", "HEIC", "JPEG")
@@ -48,15 +55,6 @@ def playlist(client: Client, message: Message):
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
 	indiriliyor: Message = message.reply(text, quote=True)
 	updatePipPackage("yt-dlp")
-
-	# calisma kontrolu
-	if os.path.exists('calisiyor.txt'):
-		message.reply(f"🇹🇷 elleme beni işim var.\n🇬🇧 dont touch me. i am working.\n\n" + \
-		f'<a href="tg://user?id={message.from_user.id}">{message.from_user.id}</a>', quote=True)
-		return
-	with open('calisiyor.txt', 'w') as writefile: writefile.write("ok")
-	# calisma kontrolu
-
 	urele, boyut, titol, uploader = getVideoDetails(url)
 
 	#video limit
