@@ -4,7 +4,7 @@
 
 🇬🇧 Telegram playlist download bot with ytdl
 
-🇹🇷 Telegram oynatma listesi indiciri bot
+🇹🇷 Telegram oynatma listesi indirici bot
 
 Demo in Telegram: [@HAPlaylistBot](https://t.me/HAPlaylistBot)
 
