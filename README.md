@@ -1,14 +1,29 @@
 # Telegram PlaylistAudioBot
-![Codacy grade](https://img.shields.io/github/license/huzunluartemis/PlaylistAudioBot.svg)
-![Codacy grade](https://img.shields.io/github/issues/huzunluartemis/PlaylistAudioBot.svg)
-![Codacy grade](https://img.shields.io/github/issues-pr-raw/huzunluartemis/PlaylistAudioBot.svg)
-![Codacy grade](https://img.shields.io/github/repo-size/huzunluartemis/PlaylistAudioBot.svg)
-![Codacy grade](https://visitor-badge.laobi.icu/badge?page_id=huzunluartemis.PlaylistAudioBot)
-![Codacy grade](https://img.shields.io/codacy/grade/ac102a243331444fa6e607f33de10066)
-![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/huzunluartemis/PlaylistAudioBot)
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/huzunluartemis/PlaylistAudioBot)
-![GitHub top language](https://img.shields.io/github/languages/top/huzunluartemis/PlaylistAudioBot)
-![GitHub last commit](https://img.shields.io/github/last-commit/huzunluartemis/PlaylistAudioBot)
+
+[![](https://img.shields.io/github/license/huzunluartemis/PlaylistAudioBot.svg?style=flat)](#)
+[![](https://img.shields.io/github/issues-raw/huzunluartemis/PlaylistAudioBot.svg?style=flat)](#)
+[![](https://img.shields.io/github/issues-closed-raw/huzunluartemis/PlaylistAudioBot.svg?style=flat)](#)
+[![](https://img.shields.io/github/issues-pr-raw/huzunluartemis/PlaylistAudioBot.svg?style=flat)](#)
+[![](https://img.shields.io/github/issues-pr-closed-raw/huzunluartemis/PlaylistAudioBot.svg?style=flat)](#)
+
+[![](https://img.shields.io/github/languages/count/huzunluartemis/PlaylistAudioBot?style=flat)](#)
+[![](https://img.shields.io/github/languages/top/huzunluartemis/PlaylistAudioBot?style=flat)](#)
+[![](https://img.shields.io/github/last-commit/huzunluartemis/PlaylistAudioBot?style=flat)](#)
+[![](https://img.shields.io/github/repo-size/huzunluartemis/PlaylistAudioBot.svg?style=flat)](#)
+[![](https://img.shields.io/github/forks/huzunluartemis/PlaylistAudioBot?style=flat&logo=github)](#)
+[![](https://img.shields.io/github/stars/huzunluartemis/PlaylistAudioBot?style=flat&logo=github)](#)
+
+[![](https://img.shields.io/github/contributors-anon/HuzunluArtemis/PlaylistAudioBot?style=flat)](#)
+[![](https://img.shields.io/github/watchers/huzunluartemis/PlaylistAudioBot?style=flat)](#)
+[![](https://visitor-badge.laobi.icu/badge?page_id=huzunluartemis.PlaylistAudioBot)](#)
+[![](https://img.shields.io/codacy/grade/ac102a243331444fa6e607f33de10066?style=flat)](#)
+[![](https://img.shields.io/codefactor/grade/github/huzunluartemis/PlaylistAudioBot?style=flat)](#)
+[![](https://img.shields.io/snyk/vulnerabilities/github/huzunluartemis/PlaylistAudioBot?style=flat)](#)
+
+[![](https://img.shields.io/github/followers/huzunluartemis?logo=github&style=flat)](#)
+[![](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Frunkit.io%2Fdamiankrawczyk%2Ftelegram-badge%2Fbranches%2Fmaster%3Furl%3Dhttps%3A%2F%2Ft.me/HuzunluArtemis)](https://t.me/HuzunluArtemis)
+[![](https://img.shields.io/twitter/follow/huzunluartemis?color=blue&style=flat&logo=twitter)](https://twitter.com/HuzunluArtemis)
+[![](https://img.shields.io/badge/website-online-blue?style=flat&logo=appveyor&style=flat&logo=twitter)](https://huzunluartemis.github.io/)
 
 ## PlaylistAudioBot:
 
@@ -16,13 +31,11 @@
 
 🇹🇷 Telegram oynatma listesi indirici bot (m4a, sadece ses)
 
-Demo in Telegram: [@PlaylistAudioBot](https://t.me/PlaylistAudioBot)
-
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/HuzunluArtemis/PlaylistAudioBot)
+🔥 Demo in Telegram: [@PlaylistAudioBot](https://t.me/PlaylistAudioBot)
 
 ## Features
 <details>
-  <summary><b>Click Here For Details</b></summary><br>
+  <summary><b>🇬🇧 Click Here 🇹🇷 Buraya Tıkla</b></summary><br>
 
 - Youtube-DL downloading status
 - Fully customizable progressbar
@@ -41,7 +54,7 @@ Demo in Telegram: [@PlaylistAudioBot](https://t.me/PlaylistAudioBot)
 
 ## Setting up config file
 <details>
-    <summary><b>Click Here For Details</b></summary><br>
+    <summary><b>🇬🇧 Click Here 🇹🇷 Buraya Tıkla</b></summary><br>
     <b>Required Variables:</b><br><br>
     
 - `BOT_TOKEN`: Telegram Bot Token. Example: `3asd2a2sd32:As56das65d2as:ASd2a6s3d26as`
@@ -65,9 +78,37 @@ Demo in Telegram: [@PlaylistAudioBot](https://t.me/PlaylistAudioBot)
 - `YTDL_DOWNLOAD_FORMAT`: Ytdl format selector. Leave blank if you dont know.
 </details>
 
+## Deploy
+<details>
+  <summary><b>🇬🇧 Click Here 🇹🇷 Buraya Tıkla</b></summary><br>
+
+<b>Deploy to Heroku:</b>
+
+- [Open me in new tab](https://heroku.com/deploy?template=https://github.com/HuzunluArtemis/PlaylistAudioBot)
+- Fill required variables
+- Fill app name (or dismiss)
+- Make you sure building with Dockerfile (as container. not heroku-18 or heroku-20)
+
+<b>Deploy to Local:</b>
+
+- install [python](https://www.python.org/downloads/) and [ffmpeg](https://www.ffmpeg.org/download.html) to your machine
+- `git clone https://github.com/HuzunluArtemis/PlaylistAudioBot`
+- `cd PlaylistAudioBot`
+- `pip install -r requirements.txt`
+- `python bot.py`
+
+<b>Deploy to Vps:</b>
+
+- `git clone https://github.com/HuzunluArtemis/PlaylistAudioBot`
+- `cd PlaylistAudioBot`
+- For Debian based distros `sudo apt install python3 && sudo snap install docker`
+- For Arch and it's derivatives: `sudo pacman -S docker python`
+
+</details>
+
 ## License
 <details>
-    <summary><b>Click Here For Details</b></summary>
+    <summary><b>🇬🇧 Click Here 🇹🇷 Buraya Tıkla</b></summary>
   <br>
   <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
   <img src="https://www.gnu.org/graphics/gplv3-127x51.png" alt="GNU GPLv3 Image">
