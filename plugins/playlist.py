@@ -46,7 +46,7 @@ def playlist(client: Client, message: Message):
 		try:
 			url = url[1]
 		except IndexError:
-			message.reply(f"🇬🇧 click and read: /help\n🇹🇷 tıkla ve oku: /yardim", quote=True)
+			message.reply("🇬🇧 click and read: /help\n🇹🇷 tıkla ve oku: /yardim", quote=True)
 			clearVars()
 			cleanFiles()
 			return
@@ -57,7 +57,14 @@ def playlist(client: Client, message: Message):
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
 	indiriliyor: Message = message.reply(text, quote=True)
 	updatePipPackage("yt-dlp")
-	urele, boyut, titol, uploader = getVideoDetails(url)
+	boyut = None
+	try:
+		_, boyut, _, _ = getVideoDetails(url, indiriliyor)
+	except TypeError as e:
+		LOGGER.info(str(e))
+		clearVars()
+		cleanFiles()
+		return
 
 	#video limit
 	if (Config.VIDEO_LIMIT != 0) and (len(boyut) > Config.VIDEO_LIMIT):

@@ -1,6 +1,7 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
 import logging
+from HelperFunc.clean import cleanFiles
 from HelperFunc.progressMulti import TimeFormatter, humanbytes
 from pyrogram.types.messages_and_media.message import Message
 import os, time, math
@@ -26,6 +27,16 @@ boyutlar = []
 titles = []
 uploader = []
 startTime = time.time()
+
+def ExitWithException(message:Message, exception:str, link:str):
+    mes = None
+    if "is not a valid URL." in str(exception):
+        mes = f"🇬🇧 not a valid link 🇹🇷 geçersiz link:\n`{link}`"
+    if not mes: mes = f"`{str(exception)}`"
+    mes += "\n\n🇬🇧 click and read: /help\n🇹🇷 tıkla ve oku: /yardim"
+    message.edit_text(mes,disable_web_page_preview=True)
+    clearVars()
+    cleanFiles()
 
 def clearVars():
     global mesaj,playlist,last_downloaded,downloaded_bytes,progress,toplamBoyut,urller,indirilen,boyutlar,titles,uploader, infoMes, startTime
@@ -152,23 +163,26 @@ def ytdDownload(link, message:Message, info:str):
             ]
         }
         ydl:YoutubeDL = YoutubeDL(downloaderOptions)
-        try:
-            ydl:YoutubeDL = YoutubeDL(downloaderOptions)
-            ydl.download([link])
-        except Exception as t:
-            LOGGER.error(str(t))
+        ydl.download([link])
     except DownloadError as e:
-        return e
+        ExitWithException(mesaj, str(e), link)
+        return
     except ValueError as v:
-        return v
+        ExitWithException(mesaj, str(v), link)
+        return
 
 
-def getVideoDetails(url:str):
-    global urller,boyutlar,titles,toplamBoyut,uploader,playlist
+def getVideoDetails(url:str, message:Message):
+    global urller,boyutlar,titles,toplamBoyut,uploader,playlist,mesaj
+    mesaj = message
     ydl_opts = {'format': Config.YTDL_DOWNLOAD_FORMAT}
     ydl:YoutubeDL = YoutubeDL(ydl_opts)
-    result = ydl.extract_info(url, download=False) #We just want to extract the info
-    
+    result = None
+    try:
+        result = ydl.extract_info(url, download=False) #We just want to extract the info
+    except Exception as t:
+        ExitWithException(mesaj,str(t), url)
+        return
     if 'entries' in result:
         playlist = True
         video = result['entries']
