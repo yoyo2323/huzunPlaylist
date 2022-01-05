@@ -1,4 +1,14 @@
 # Telegram PlaylistAudioBot
+![Codacy grade](https://img.shields.io/github/license/huzunluartemis/PlaylistAudioBot.svg)
+![Codacy grade](https://img.shields.io/github/issues/huzunluartemis/PlaylistAudioBot.svg)
+![Codacy grade](https://img.shields.io/github/issues-pr-raw/huzunluartemis/PlaylistAudioBot.svg)
+![Codacy grade](https://img.shields.io/github/repo-size/huzunluartemis/PlaylistAudioBot.svg)
+![Codacy grade](https://visitor-badge.laobi.icu/badge?page_id=huzunluartemis.PlaylistAudioBot)
+![Codacy grade](https://img.shields.io/codacy/grade/ac102a243331444fa6e607f33de10066)
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/huzunluartemis/PlaylistAudioBot)
+![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/huzunluartemis/PlaylistAudioBot)
+![GitHub top language](https://img.shields.io/github/languages/top/huzunluartemis/PlaylistAudioBot)
+![GitHub last commit](https://img.shields.io/github/last-commit/huzunluartemis/PlaylistAudioBot)
 
 ## PlaylistAudioBot:
 
