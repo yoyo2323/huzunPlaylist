@@ -8,7 +8,7 @@ ENV TZ=Asia/Kolkata \
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app && \
     apt-get update -y && apt-get upgrade -y && \
-    apt-get install -y git python3 python3-pip locales ffmpeg tree && \
+    apt-get install -y git python3 python3-pip locales ffmpeg && \
     apt-get upgrade -y
 
 COPY requirements.txt .
