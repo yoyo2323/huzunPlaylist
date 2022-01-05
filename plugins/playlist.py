@@ -88,7 +88,7 @@ def playlist(client: Client, message: Message):
 		cleanFiles()
 		return
 	
-	try: indiriliyor.edit_text(f"🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
+	try: indiriliyor.edit_text(f"{info}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
 	except: pass
 	indirmeBasladi = time.time()
 	ytdDownload(url, indiriliyor, info)
@@ -103,7 +103,7 @@ def playlist(client: Client, message: Message):
 	LOGGER.info("#toup: " + ", ".join(toup))
 	toplamarsiv = str(len(toup))
 	indirilenBoyut = get_size(outDir)
-	try: indiriliyor.edit_text(f"🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}")
+	try: indiriliyor.edit_text(f"{info}🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}")
 	except: pass
 	
 	c_time = time.time()
@@ -123,9 +123,9 @@ def playlist(client: Client, message: Message):
 				indiriliyor.reply_audio(audio=dosyaYolu, disable_notification=True,
 				caption=kepsin,duration=duration, performer=artist,title=title, thumb="src/file.jpg",
 				quote=True, progress = progressMulti,
-				progress_args=(f"mesaj: {indiriliyor.link}\n" + \
-				f"anlık sıra / file quee: {str(suan)}/{toplamarsiv}\n" + \
-				f"yüklenen / uploading:\n`{filo}`", indiriliyor, c_time, indirilenBoyut, toplamGonderilen))
+				progress_args=(f"{info}Dosyalar / Files:\n\n- mesaj: {indiriliyor.link}\n" + \
+				f"- anlık sıra / file quee: {str(suan)}/{toplamarsiv}\n" + \
+				f"- yüklenen / uploading:\n`{filo}`", indiriliyor, c_time, indirilenBoyut, toplamGonderilen))
 				time.sleep(Config.SLEEP_BETWEEN_SEND_FILES)
 			except FloodWait as f:
 				LOGGER.info("Dosya gönderimi / timesleep" + str(f))
@@ -133,9 +133,9 @@ def playlist(client: Client, message: Message):
 				indiriliyor.reply_audio(audio=dosyaYolu, disable_notification=True,
 				caption=kepsin,duration=duration, performer=artist,title=title, thumb="src/file.jpg",
 				quote=True, progress = progressMulti,
-				progress_args=(f"mesaj: {indiriliyor.link}\n" + \
-				f"anlık sıra / file quee: {str(suan)}/{toplamarsiv}\n" + \
-				f"yüklenen / uploading:\n`{filo}`", indiriliyor, c_time, indirilenBoyut, toplamGonderilen))
+				progress_args=(f"{info}Dosyalar / Files:\n\n- mesaj: {indiriliyor.link}\n" + \
+				f"- anlık sıra / file quee: {str(suan)}/{toplamarsiv}\n" + \
+				f"- yüklenen / uploading:\n`{filo}`", indiriliyor, c_time, indirilenBoyut, toplamGonderilen))
 				time.sleep(Config.SLEEP_BETWEEN_SEND_FILES)
 			except RPCError as e:
 				LOGGER.error("RPCError: " + str(e))
@@ -168,7 +168,8 @@ def playlist(client: Client, message: Message):
 		f"🇹🇷 indirme süresi 🇬🇧 download time: {ReadableTime(indirmeBitti-indirmeBasladi)}\n" + \
 		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(time.time() - c_time)}\n" + \
 		f"🇹🇷 toplam süre 🇬🇧 total time: {ReadableTime(time.time() - indirmeBasladi)}\n" + \
-		f"🇹🇷 toplam dosya 🇬🇧 total file: {toplamarsiv}"
+		f"🇹🇷 toplam dosya 🇬🇧 total file: {toplamarsiv}\n" + \
+		f'<a href="{indiriliyor.link}">🇹🇷 indirici mesaj 🇬🇧 downloader message</a>'
 	indiriliyor.reply_text(texto, quote=True)
 	indiriliyor.edit_text(texto)
 	clearVars()
