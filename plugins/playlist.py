@@ -92,8 +92,8 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	if not gelen.from_user.id in Config.PREMIUM_USERS: vidLim = Config.VIDEO_LIMIT_FREE_USER
 	else: vidLim = Config.VIDEO_LIMIT_PREMIUM_USER
 	if (vidLim != 0) and (len(boyut) > vidLim):
-		try: duzenlenecek.edit_text(f"🇬🇧 video limit: @{str(vidLim)} yours: {len(boyut)}\n" + \
-			f"If you want to be premium user, contact: {Config.CHANNEL_OR_CONTACT}" + \
+		try: duzenlenecek.edit_text(f"🇬🇧 video limit: {str(vidLim)} yours: {len(boyut)}\n" + \
+			f"If you want to be premium user, contact: @{Config.CHANNEL_OR_CONTACT}" + \
 			f"\n\n🇹🇷 video limiti: {str(vidLim)} seninki: {len(boyut)}\n" + \
 			f"Premium olmak istiyorsanız iletişim: @{Config.CHANNEL_OR_CONTACT}")
 		except Exception as h: LOGGER.info(str(h))
