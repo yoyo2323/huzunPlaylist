@@ -1,66 +1,71 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
-import asyncio
+import asyncio, logging
+import time
 from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified
 from pyrogram.types import Message
 from pyrogram.errors import FloodWait
 from pyrogram.types.bots_and_keyboards.inline_keyboard_markup import InlineKeyboardMarkup
-import logging
+
+from HelperFunc.mediaInfo import getMediaInfo
+from HelperFunc.progressMulti import progressMulti
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
     level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
-async def sendMessage(toReplyMessage: Message, replyText: str, replyButtons:InlineKeyboardMarkup = None):
+def sendMessage(toReplyMessage: Message, replyText: str, replyButtons:InlineKeyboardMarkup = None):
     try:
-        return await toReplyMessage.reply_text(replyText,
+        return toReplyMessage.reply_text(replyText,
             disable_web_page_preview=True,
-            parse_mode='markdown',
             quote=True,
             reply_markup = replyButtons)
     except FloodWait as e:
-        await asyncio.sleep(e.x)
-        LOGGER.info(str(e))
-        await sendMessage(toReplyMessage)
+        time.sleep(e.x * 1.5)
+        return toReplyMessage.reply_text(replyText,
+            disable_web_page_preview=True,
+            quote=True,
+            reply_markup = replyButtons)
     except Exception as e:
         LOGGER.info(str(e))
 
-async def editMessage(toEditMessage: Message, editText: str, replyButtons:InlineKeyboardMarkup = None):
+def editMessage(toEditMessage: Message, editText: str, replyButtons:InlineKeyboardMarkup = None):
     try:
-        return await toEditMessage.edit(text=editText,
+        return toEditMessage.edit(text=editText,
             disable_web_page_preview=True,
-            parse_mode='markdown',
             reply_markup = replyButtons)
     except FloodWait as e:
-        await asyncio.sleep(e.x)
-        LOGGER.info(str(e))
-        await editMessage(toEditMessage)
+        time.sleep(e.x * 1.5)
+        return toEditMessage.edit(text=editText,
+            disable_web_page_preview=True,
+            reply_markup = replyButtons)
     except MessageNotModified as e:
         LOGGER.info(str(e))
     except Exception as e:
         LOGGER.info(str(e))
 
-async def copyMessage(toReplyDocument: Message, toCopyChatId: int = None, sendAsReply: bool = False):
-    if toCopyChatId is None: toCopyChatId = toReplyDocument.chat.id
+def sendDocument(toReplyDocument: Message, filePath: str):
     try:
-        if sendAsReply:
-            return await toReplyDocument.copy(chat_id=toCopyChatId,
-                reply_to_message_id=toReplyDocument.message_id)
-        else:
-            return await toReplyDocument.copy(chat_id=toCopyChatId)
+        return toReplyDocument.reply_document(filePath)
     except FloodWait as e:
-        await asyncio.sleep(e.x)
-        LOGGER.info(str(e))
-        await copyMessage(toReplyDocument)
+        time.sleep(e.x * 1.5)
+        return toReplyDocument.reply_document(filePath)
     except Exception as e:
         LOGGER.info(str(e))
 
-async def sendDocument(toReplyDocument: Message, filePath: str):
+def sendAudio(toReply, filePath, caption, progresArgs, duzenlenecek, c_time, indirilenBoyut, toplamGonderilen):
+    duration, artist, title = getMediaInfo(filePath)
     try:
-        return await toReplyDocument.reply_document(filePath)
+        return toReply.reply_audio(audio=filePath, disable_notification=True,
+				caption=caption,duration=duration, performer=artist,title=title, thumb="src/file.jpg",
+				quote=True, progress = progressMulti,
+				progress_args=(progresArgs, duzenlenecek, c_time, indirilenBoyut, toplamGonderilen))
     except FloodWait as e:
-        await asyncio.sleep(e.x)
-        LOGGER.info(str(e))
-        await sendDocument(toReplyDocument)
+        time.sleep(e.x * 1.5)
+        return toReply.reply_audio(audio=filePath, disable_notification=True,
+				caption=caption,duration=duration, performer=artist,title=title, thumb="src/file.jpg",
+				quote=True, progress = progressMulti,
+				progress_args=(progresArgs, duzenlenecek, c_time, indirilenBoyut, toplamGonderilen))
     except Exception as e:
         LOGGER.info(str(e))

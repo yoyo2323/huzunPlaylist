@@ -1,7 +1,6 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
-import subprocess
-import logging
+import subprocess, logging
 
 from config import Config
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

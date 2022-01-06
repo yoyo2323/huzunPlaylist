@@ -1,15 +1,14 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
-import logging
-import subprocess
-import json
+import logging, subprocess, json, os
+
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
     level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
 
-def get_media_info(path):
+def getMediaInfo(path):
     try:
         result = subprocess.check_output(["ffprobe", "-hide_banner", "-loglevel", "error", "-print_format",
                                           "json", "-show_format", path]).decode('utf-8')
@@ -28,7 +27,7 @@ def get_media_info(path):
     try:
         title = str(fields['tags']['title'])
     except:
-        title = None
+        _, title = os.path.split(path)
     LOGGER.info(f"ffprobe: duration: {str(duration)} artist: {str(artist)} title: {str(title)}")
     return duration, artist, title
 

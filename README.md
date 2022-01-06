@@ -42,10 +42,13 @@
 - Custom ytdl format selector (dont change if you dont know)
 - Custom thumbnail (replace src/file.jpg with yours)
 - Force Subscribe
-- Video limit (give 0 for unlimited, default 0)
-- Size limit (give 0 for unlimited, default 0)
+- 2 type of user: Standart, Premium
+- Video limit
+- Size limit
+- Quee
 - Logger
 - Shell
+- Stats
 - Pinger
 </details>
 
@@ -73,6 +76,13 @@
 - `UPDATE_YTDL_EVERY_DOWNLOAD`: Give `True` if you want to update ytdl in every download command. Default `True`
 - `SLEEP_BETWEEN_SEND_FILES`: For floodwait. Leave blank if you dont know.
 - `YTDL_DOWNLOAD_FORMAT`: Ytdl format selector. Leave blank if you dont know.
+- `SEND_LOGS_WHEN_DYING`: Send log.txt while exiting. Default `False`
+- `VIDEO_LIMIT_FREE_USER`: 0: Unlimited. Default `False`
+- `VIDEO_LIMIT_PREMIUM_USER`: 0: Unlimited. Default `0`
+- `SIZE_LIMIT_FREE_USER`: 0: Unlimited. Default `0`
+- `SIZE_LIMIT_PREMIUM_USER`: 0: Unlimited. Default `0`
+- `PROCESS_PER_USER_FREE_USER`: 0: Unlimited. Default `2`
+- `PROCESS_PER_USER_PREMIUM_USER`: 0: Unlimited. Default `0`
 </details>
 
 ## Deploy

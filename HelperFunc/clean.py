@@ -1,7 +1,6 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
-import logging
-import os, shutil
+import os, shutil, logging
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
@@ -9,7 +8,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 LOGGER = logging.getLogger(__name__)
 
 def cleanFiles(exiting = False):
-    calisiyorYolu = "calisiyor.txt"
 
     LOGGER.info("files cleared.")
     if exiting:
@@ -19,12 +17,6 @@ def cleanFiles(exiting = False):
                 if os.path.isfile(it): os.remove(it)
         except Exception as r:
             LOGGER.error("error when delete: "+ str(r))
-    try:
-        files = [calisiyorYolu]
-        for it in files:
-            if os.path.isfile(it): os.remove(it)
-    except:
-        pass
     try:
         shutil.rmtree("musics") # delete folder for user
         os.rmdir("musics")

@@ -12,7 +12,6 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     BOT_USERNAME = os.environ.get("BOT_USERNAME", "") # dont touch
     
-    #
     UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", 'HuzunluArtemis')
     CHANNEL_OR_CONTACT = os.environ.get("CHANNEL_OR_CONTACT", 'HuzunluArtemis')
     FINISHED_PROGRESS_STR = os.environ.get('FINISHED_PROGRESS_STR','●')
@@ -29,14 +28,14 @@ class Config(object):
     JOIN_BUTTON_STR = os.environ.get('JOIN_BUTTON_STR', "🇬🇧 Join / 🇹🇷 Katıl")
     OWNER_ID = int(os.environ.get('OWNER_ID', 0)) # give your owner id # if given 0 shell will not works
     AUTH_IDS = [int(x) for x in os.environ.get("AUTH_IDS", "0").split()] # if open to everyone give 0
-    if OWNER_ID != 0: AUTH_IDS.append(OWNER_ID)
+    PREMIUM_USERS = [int(x) for x in os.environ.get("PREMIUM_USERS", "0").split()] # quee not affect by premium
     # forcesub vars
     FORCE_SUBSCRIBE_CHANNEL = os.environ.get('FORCE_SUBSCRIBE_CHANNEL', '') # force subscribe channel link.
     if FORCE_SUBSCRIBE_CHANNEL == "" or FORCE_SUBSCRIBE_CHANNEL == " " or FORCE_SUBSCRIBE_CHANNEL == None: FORCE_SUBSCRIBE_CHANNEL = None # bu satıra dokunmayın.
-    LOGGER.info(f"FORCE_SUBSCRIBE_CHANNEL: {FORCE_SUBSCRIBE_CHANNEL}") # debug
     # commands
-    
+    SESSION = os.environ.get('SESSION', 'PlaylistAudioBot')
     LOG_COMMAND = [os.environ.get('LOG_COMMAND','log')]
+    STATS_COMMAND = [os.environ.get('STATS_COMMAND','stats')]
     TG_SPLIT_SIZE = int(os.environ.get("TG_SPLIT_SIZE", "2097151000"))
     MUSIC_COMMAND = [os.environ.get('MUSIC_COMMAND','music')]
     SHELL_COMMAND = [os.environ.get('SHELL_COMMAND','shell')]
@@ -45,14 +44,21 @@ class Config(object):
     YTDL_DOWNLOAD_FORMAT = os.environ.get('YTDL_DOWNLOAD_FORMAT', 'bestaudio[ext=m4a] / bestaudio')
     botStartTime = time.time() # dont touch
     UPDATE_YTDL_EVERY_DOWNLOAD = str(os.environ.get("UPDATE_YTDL_EVERY_DOWNLOAD", "True")).lower() == 'true'
+    SEND_LOGS_WHEN_DYING = str(os.environ.get("SEND_LOGS_WHEN_DYING", "False")).lower() == 'true'
     SLEEP_BETWEEN_SEND_FILES = int(os.environ.get("SLEEP_BETWEEN_SEND_FILES", 7))
-    VIDEO_LIMIT = int(os.environ.get("VIDEO_LIMIT", 0))
-    SIZE_LIMIT = int(os.environ.get("SIZE_LIMIT", 0))
-    
+    VIDEO_LIMIT_FREE_USER = int(os.environ.get("VIDEO_LIMIT_FREE_USER", 0))
+    SIZE_LIMIT_FREE_USER = int(os.environ.get("SIZE_LIMIT_FREE_USER", 0))
+    VIDEO_LIMIT_PREMIUM_USER = int(os.environ.get("VIDEO_LIMIT_PREMIUM_USER", 0))
+    SIZE_LIMIT_PREMIUM_USER = int(os.environ.get("SIZE_LIMIT_PREMIUM_USER", 0))
+    PROCESS_PER_USER_PREMIUM_USER = int(os.environ.get('PROCESS_PER_USER_PREMIUM_USER', '0'))
+    PROCESS_PER_USER_FREE_USER = int(os.environ.get('PROCESS_PER_USER_FREE_USER', '2'))
     HELP_COMMANDS = ["start", "help", "about", "yardım", "h", "y"]
+    if OWNER_ID != 0:
+        AUTH_IDS.append(OWNER_ID)
+        PREMIUM_USERS.append(OWNER_ID)
     if not BOT_USERNAME.startswith('@'): BOT_USERNAME = '@' + BOT_USERNAME # bu satıra dokunmayın.
     # komutları kopyala
-    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND,MUSIC_COMMAND, SHELL_COMMAND]
+    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND, MUSIC_COMMAND, SHELL_COMMAND, STATS_COMMAND]
     for ComS in AllCom:
         Lier = ComS.copy()
         for p in Lier:

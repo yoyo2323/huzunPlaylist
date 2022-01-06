@@ -4,8 +4,8 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton
 from pyrogram.types.bots_and_keyboards.inline_keyboard_markup import InlineKeyboardMarkup
 from pyrogram.types.messages_and_media.message import Message
-from HelperFunc.authUserCheck import AuthUserCheck
-from HelperFunc.forceSubscribe import ForceSub
+from HelperFunc.authUserCheck import AuthUserCheckSync
+from HelperFunc.forceSubscribe import ForceSubSync
 from HelperFunc.messageFunc import sendMessage
 from HelperFunc.progressMulti import humanbytes
 from config import Config
@@ -17,24 +17,36 @@ LOGGER = logging.getLogger(__name__)
 
 
 @Client.on_message(filters.command(Config.HELP_COMMANDS))
-async def help(client, message: Message):
-	if not await AuthUserCheck(message): return
-	if await ForceSub(client, message) == 400: return
+def help(client, message: Message):
+	if not AuthUserCheckSync(message): return
+	if ForceSubSync(client, message) == 400: return
 	sampleText = ""
 	sampleText += f"🇬🇧 You can download a playlist with: /{Config.MUSIC_COMMAND[0]} -Link-\n"
 	sampleText += f"Example: `/{Config.MUSIC_COMMAND[0]} https://www.youtube.com/playlist?list=PL9kxHCTcPAEUQrfF0L4TGZkI3hUF3awgD`\n"
 	sampleText += "You can reply to message that contains playlist url.\n"
-	if Config.SIZE_LIMIT != 0: sampleText += f"Size limit: {humanbytes(Config.SIZE_LIMIT)}"
-	if Config.VIDEO_LIMIT != 0:
-		if Config.SIZE_LIMIT != 0: sampleText += ", "
-		sampleText += f"Video limit: {str(Config.VIDEO_LIMIT)}\n"
 	sampleText += f"\n🇹🇷 Bir oynatma listesini şöyle indirebilirsin: /{Config.MUSIC_COMMAND[0]} -Link-\n"
 	sampleText += f"Örnek: `/{Config.MUSIC_COMMAND[0]} https://www.youtube.com/playlist?list=PL9kxHCTcPAEUQrfF0L4TGZkI3hUF3awgD`\n"
-	sampleText += "Oynatma listesi linki içeren bir mesaj yanıtlarsan da olur.\n"
-	if Config.SIZE_LIMIT != 0: sampleText += f"Boyut limiti: {humanbytes(Config.SIZE_LIMIT)}"
-	if Config.VIDEO_LIMIT != 0:
-		if Config.SIZE_LIMIT != 0: sampleText += ", "
-		sampleText += f"Video limiti: {str(Config.VIDEO_LIMIT)}"
+	sampleText += "Oynatma listesi linki içeren bir mesaj yanıtlarsan da olur.\n\n"
+	plan = None
+	sizeLim = 0
+	QueeLim = 0
+	vidLim = 0
+	if not message.from_user.id in Config.PREMIUM_USERS:
+		sizeLim = Config.SIZE_LIMIT_FREE_USER
+		QueeLim = Config.PROCESS_PER_USER_FREE_USER
+		vidLim = Config.VIDEO_LIMIT_FREE_USER
+		plan = "Standart"
+	else:
+		sizeLim = Config.SIZE_LIMIT_PREMIUM_USER
+		QueeLim = Config.PROCESS_PER_USER_PREMIUM_USER
+		vidLim = Config.VIDEO_LIMIT_PREMIUM_USER
+		plan = "Premium"
+	if vidLim == 0: vidLim = "Sınırsız / Unlimited"
+	if QueeLim == 0: QueeLim = "Sınırsız / Unlimited"
+	if sizeLim == 0: sizeLim = "Sınırsız / Unlimited"
+	else: sizeLim = humanbytes(sizeLim)
+	sampleText += f"🌈 Plan: {plan}\n🔑 Size Limit / Boyut Limiti: {sizeLim}\n" + \
+		f"🌿 Quee Limit / Sıra Limiti: {str(QueeLim)}\n🥕 Video Limit / Video Limiti: {str(vidLim)}"
 	tumad = message.from_user.first_name
 	if message.from_user.last_name != None: tumad += f" {message.from_user.last_name}"
 	toSendStr = f"Esenlikler / Hi {tumad}\n\n" + sampleText
@@ -47,4 +59,4 @@ async def help(client, message: Message):
 				url = "https://t.me/" + Config.UPDATES_CHANNEL)
 				]
 			])
-	await sendMessage(message,toSendStr,reply_markup)
+	sendMessage(message,toSendStr,reply_markup)
