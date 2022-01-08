@@ -82,7 +82,7 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	text = info + "🇹🇷 inceleniyor.\nbu işlem her video için 1 saniye demektir.\neğer 60 videonuz varsa, 60 saniye bekleyin.\n\n"
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
 	if Config.UPDATE_YTDL_EVERY_DOWNLOAD: updatePipPackage("yt-dlp")
-	videolar = None
+	videolar, unavailables = None
 	try: videolar, kendisi, unavailables = getVideoDetails(url, duzenlenecek)
 	except TypeError as e:
 		LOGGER.info(str(e))
