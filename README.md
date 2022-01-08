@@ -17,11 +17,10 @@
 [![](https://img.shields.io/codacy/grade/ac102a243331444fa6e607f33de10066?style=flat)](#)
 [![](https://img.shields.io/codefactor/grade/github/huzunluartemis/PlaylistAudioBot?style=flat)](#)
 [![](https://img.shields.io/snyk/vulnerabilities/github/huzunluartemis/PlaylistAudioBot?style=flat)](#)
-[![](https://img.shields.io/github/followers/huzunluartemis?logo=github&style=flat)](#)
-[![](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Frunkit.io%2Fdamiankrawczyk%2Ftelegram-badge%2Fbranches%2Fmaster%3Furl%3Dhttps%3A%2F%2Ft.me/HuzunluArtemis)](https://t.me/HuzunluArtemis)
-[![](https://img.shields.io/twitter/follow/huzunluartemis?color=blue&style=flat&logo=twitter)](https://twitter.com/HuzunluArtemis)
-[![](https://img.shields.io/badge/website-online-blue?style=flat&logo=appveyor&style=flat&logo=twitter)](https://huzunluartemis.github.io/)
-
+[![](https://img.shields.io/github/followers/huzunluartemis?logo=github&label=ha&style=flat)](#)
+[![](https://img.shields.io/twitter/follow/huzunluartemis?&label=ha&color=blue&style=flat&logo=twitter)](https://twitter.com/HuzunluArtemis)
+[![](https://img.shields.io/badge/dynamic/json?color=blue&label=ha&query=subscribers&url=https%3A%2F%2Fonline-users-api.up.railway.app%2Fcheck%3Fchat%3DHuzunluArtemis&logo=telegram)](https://t.me/HuzunluArtemis)
+[![](https://img.shields.io/badge/website-up-blue?style=flat&logo=appveyor&style=flat&logo=twitter)](https://huzunluartemis.github.io/)
 ## PlaylistAudioBot:
 
 🇬🇧 Telegram playlist download bot with ytdl (m4a, only audio)
@@ -37,7 +36,7 @@
 - Youtube-DL downloading status
 - Fully customizable progressbar
 - Auto update ytdl with every download
-- Auot update all requirements with restart
+- Auto update all requirements with restart
 - Only one process in same time (for stabilization)
 - Embed thumbnail, metadata's to file
 - Custom ytdl format selector (dont change if you dont know)
