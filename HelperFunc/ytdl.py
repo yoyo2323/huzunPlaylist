@@ -1,6 +1,8 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
 import logging
+
+from yt_dlp.utils import UnavailableVideoError
 from HelperFunc.clean import cleanFiles
 from HelperFunc.progressMulti import TimeFormatter, humanbytes
 from pyrogram.types.messages_and_media.message import Message
@@ -144,6 +146,7 @@ def ytdDownload(link, message:Message, info:str):
         downloaderOptions = {
             'format': Config.YTDL_DOWNLOAD_FORMAT,
             'no_warnings': False,
+            'ignoreerrors': True,
             'writethumbnail': True,
             'outtmpl': os.path.join(SAVE_PATH, "%(title)s.%(ext)s"),
             'progress_hooks': [my_hook],
@@ -173,38 +176,66 @@ def ytdDownload(link, message:Message, info:str):
 
 
 def getVideoDetails(url:str, message:Message):
-    global urller,boyutlar,titles,toplamBoyut,uploader,playlist,mesaj
+    global toplamBoyut, mesaj
     mesaj = message
-    ydl_opts = {'format': Config.YTDL_DOWNLOAD_FORMAT}
+    ydl_opts = {
+        'format': Config.YTDL_DOWNLOAD_FORMAT,
+        'ignoreerrors': True
+        }
     ydl:YoutubeDL = YoutubeDL(ydl_opts)
     result = None
-    try:
-        result = ydl.extract_info(url, download=False) #We just want to extract the info
-    except Exception as t:
-        ExitWithException(mesaj,str(t), url)
-        return
+    unavailableVideos = []
+    try: result = ydl.extract_info(url, download=False) #We just want to extract the info
+    except UnavailableVideoError as y:
+        LOGGER.error("#UnavailableVideoError : " + str(y))
+        unavailableVideos.append(str(y))
+    except Exception as t: LOGGER.error(str(t))
+    videolar = []
     if 'entries' in result:
-        playlist = True
         video = result['entries']
         for i, item in enumerate(video):
-            try:
-                boyutlar.append(str(result['entries'][i]['filesize']))
-            except (KeyError, TypeError):
-                boyutlar.append("0")
-            urller.append(result['entries'][i]['webpage_url'])
-            titles.append(result['entries'][i]['title'])
-            uploader.append(result['entries'][i]['uploader'])
+            videolar.append([
+                'playlist',
+                str(result['entries'][i]['id']),
+                str(result['entries'][i]['title']),
+                str(result['entries'][i]['filesize']),
+                str(result['entries'][i]['upload_date']),
+                str(result['entries'][i]['duration_string']),
+                str(result['entries'][i]['webpage_url']),
+                str(result['entries'][i]['uploader']),
+                str(result['entries'][i]['container']),
+                str(result['entries'][i]['format']),
+                str(result['entries'][i]['format_id']),
+                str(result['entries'][i]['acodec']),
+                str(result['entries'][i]['playlist_title']),
+                str(result['entries'][i]['playlist_id']),
+                str(result['entries'][i]['playlist_index']),
+                str(result['entries'][i]['n_entries'])
+            ])
     else:
-        playlist = False
-        urller.append(result['webpage_url'])
-        titles.append(result['title'])
-        uploader.append(result['uploader'])
-        try:
-            boyutlar.append(str(result['filesize']))
-        except (KeyError, TypeError):
-            boyutlar.append("0")
-    for x in range(len(urller)):
-        toplamBoyut = toplamBoyut + int(boyutlar[x])
-    return urller, boyutlar, titles, uploader
-
+        videolar.append([
+            'video',
+            str(result['id']),
+            str(result['title']),
+            str(result['filesize']),
+            str(result['upload_date']),
+            str(result['duration_string']),
+            str(result['webpage_url']),
+            str(result['uploader']),
+            str(result['container']),
+            str(result['format']),
+            str(result['format_id']),
+            str(result['acodec'])
+        ])
+    
+    kendisi = [str(result['id']),
+        str(result['channel_id']),
+        str(result['title']),
+        str(result['channel']),
+        str(result['channel_url']),
+        str(result['webpage_url'])
+        ]
+    for x in range(len(videolar)): toplamBoyut = toplamBoyut + int(videolar[x][3])
+    if len(unavailableVideos) == 0: unavailableVideos = None
+    return videolar, kendisi, unavailableVideos
 

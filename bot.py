@@ -6,6 +6,7 @@ import logging, time
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from HelperFunc.clean import cleanFiles
+from HelperFunc.updatePackage import updateRequirements
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
     level=logging.INFO)
@@ -52,5 +53,6 @@ class Bot(Client):
         LOGGER.info(msg="App Stopped.")
         exit()
 
+if Config.UPDATE_REQUIREMETS_EVERY_RESTART: updateRequirements('requirements.txt')
 app = Bot()
 app.run()

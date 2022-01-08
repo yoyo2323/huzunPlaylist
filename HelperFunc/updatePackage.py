@@ -8,10 +8,11 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
     level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
+def updateRequirements(ilename:str):
+    with open(ilename) as f: reqs = f.readlines()
+    for req in reqs: updatePipPackage(req)
+
 def updatePipPackage(packName:str):
-    if not Config.UPDATE_YTDL_EVERY_DOWNLOAD:
-        LOGGER.info("UPDATE_YTDL_EVERY_DOWNLOAD was false. returned.")
-        return
     UPDATE_COMMAND = f"pip install {packName} --upgrade"
     process = None
     try:

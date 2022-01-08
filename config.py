@@ -38,12 +38,14 @@ class Config(object):
     STATS_COMMAND = [os.environ.get('STATS_COMMAND','stats')]
     TG_SPLIT_SIZE = int(os.environ.get("TG_SPLIT_SIZE", "2097151000"))
     MUSIC_COMMAND = [os.environ.get('MUSIC_COMMAND','music')]
+    RESTART_COMMAND = [os.environ.get('RESTART_COMMAND','restart')]
     SHELL_COMMAND = [os.environ.get('SHELL_COMMAND','shell')]
     FLAME_URL = os.environ.get('FLAME_URL','https://github.com/HuzunluArtemis/PlaylistAudioBot')
     PING_COMMAND = [os.environ.get('PING_COMMAND','ping')]
     YTDL_DOWNLOAD_FORMAT = os.environ.get('YTDL_DOWNLOAD_FORMAT', 'bestaudio[ext=m4a] / bestaudio')
     botStartTime = time.time() # dont touch
     UPDATE_YTDL_EVERY_DOWNLOAD = str(os.environ.get("UPDATE_YTDL_EVERY_DOWNLOAD", "True")).lower() == 'true'
+    UPDATE_REQUIREMETS_EVERY_RESTART = str(os.environ.get("UPDATE_REQUIREMETS_EVERY_RESTART", "True")).lower() == 'true'
     SEND_LOGS_WHEN_DYING = str(os.environ.get("SEND_LOGS_WHEN_DYING", "False")).lower() == 'true'
     SLEEP_BETWEEN_SEND_FILES = int(os.environ.get("SLEEP_BETWEEN_SEND_FILES", 7))
     VIDEO_LIMIT_FREE_USER = int(os.environ.get("VIDEO_LIMIT_FREE_USER", 0))
@@ -52,13 +54,17 @@ class Config(object):
     SIZE_LIMIT_PREMIUM_USER = int(os.environ.get("SIZE_LIMIT_PREMIUM_USER", 0))
     PROCESS_PER_USER_PREMIUM_USER = int(os.environ.get('PROCESS_PER_USER_PREMIUM_USER', '0'))
     PROCESS_PER_USER_FREE_USER = int(os.environ.get('PROCESS_PER_USER_FREE_USER', '2'))
+    SORT_UPLOAD = str(os.environ.get("SORT_UPLOAD", "creationdate")) #
+    if not ((SORT_UPLOAD == 'creationdate') or (SORT_UPLOAD == 'normalsort') or (SORT_UPLOAD == 'naturalsort') or (SORT_UPLOAD == 'reversesort')):
+        LOGGER.error("Please enter valid sorting algorithm. See Config file. Or just delete SORT_UPLOAD from your env values.")
+        exit()
     HELP_COMMANDS = ["start", "help", "about", "yardım", "h", "y"]
     if OWNER_ID != 0:
         AUTH_IDS.append(OWNER_ID)
         PREMIUM_USERS.append(OWNER_ID)
     if not BOT_USERNAME.startswith('@'): BOT_USERNAME = '@' + BOT_USERNAME # bu satıra dokunmayın.
     # komutları kopyala
-    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND, MUSIC_COMMAND, SHELL_COMMAND, STATS_COMMAND]
+    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND, MUSIC_COMMAND, SHELL_COMMAND, STATS_COMMAND, RESTART_COMMAND]
     for ComS in AllCom:
         Lier = ComS.copy()
         for p in Lier:

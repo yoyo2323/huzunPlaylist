@@ -1,5 +1,6 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
+import os
 from pyrogram import Client, filters
 from pyrogram.types.messages_and_media.message import Message
 from pyrogram.errors import RPCError
@@ -11,6 +12,7 @@ from HelperFunc.forceSubscribe import ForceSubSync
 from HelperFunc.messageFunc import editMessage, sendAudio, sendMessage
 from HelperFunc.progressMulti import ReadableTime, humanbytes
 from HelperFunc.ytdl import clearVars, getVideoDetails, ytdDownload
+from HelperFunc.sort import sortModified
 from config import Config
 from HelperFunc.folderSize import get_size
 from HelperFunc.updatePackage import updatePipPackage
@@ -79,24 +81,29 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	info += f'\n- uptime: `{ReadableTime(time.time() - Config.botStartTime)}`\n\n'
 	text = info + "🇹🇷 inceleniyor.\nbu işlem her video için 1 saniye demektir.\neğer 60 videonuz varsa, 60 saniye bekleyin.\n\n"
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
-
-	updatePipPackage("yt-dlp")
-	boyut = None
-	try: _, boyut, _, _ = getVideoDetails(url, duzenlenecek)
+	if Config.UPDATE_YTDL_EVERY_DOWNLOAD: updatePipPackage("yt-dlp")
+	videolar = None
+	try: videolar, kendisi, unavailables = getVideoDetails(url, duzenlenecek)
 	except TypeError as e:
 		LOGGER.info(str(e))
 		onTaskComplete()
-
+	unavaiilableVideosMessage = None
+	if unavailables:
+		uns = "\n".join(unavailables)
+		text = "🇹🇷 Kullanılamayan videolar indirilmeyecek."
+		text += "\n🇬🇧 Unavailable videos will be not downloaded."
+		text += f"\n\n{uns}"
+		unavaiilableVideosMessage = sendMessage(gelen,text)
 	#video limit
 	vidLim = 0
 	if not gelen.from_user.id in Config.PREMIUM_USERS: vidLim = Config.VIDEO_LIMIT_FREE_USER
 	else: vidLim = Config.VIDEO_LIMIT_PREMIUM_USER
-	if (vidLim != 0) and (len(boyut) > vidLim):
-		try: duzenlenecek.edit_text(f"🇬🇧 video limit: {str(vidLim)} yours: {len(boyut)}\n" + \
+	if (vidLim != 0) and (len(videolar) > vidLim):
+		editMessage(
+			duzenlenecek, f"🇬🇧 video limit: {str(vidLim)} yours: {len(videolar)}\n" + \
 			f"If you want to be premium user, contact: @{Config.CHANNEL_OR_CONTACT}" + \
-			f"\n\n🇹🇷 video limiti: {str(vidLim)} seninki: {len(boyut)}\n" + \
+			f"\n\n🇹🇷 video limiti: {str(vidLim)} seninki: {len(videolar)}\n" + \
 			f"Premium olmak istiyorsanız iletişim: @{Config.CHANNEL_OR_CONTACT}")
-		except Exception as h: LOGGER.info(str(h))
 		onTaskComplete()
 
 	# size limit
@@ -104,37 +111,44 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	if not gelen.from_user.id in Config.PREMIUM_USERS: sizeLim = Config.SIZE_LIMIT_FREE_USER
 	else: sizeLim = Config.SIZE_LIMIT_PREMIUM_USER
 	toplamBoyut = 0
-	for x in range(len(boyut)): toplamBoyut = toplamBoyut + int(boyut[x])
+	for x in range(len(videolar)): toplamBoyut = toplamBoyut + int(videolar[x][3])
 	if (sizeLim != 0) and (toplamBoyut > sizeLim):
-		try: duzenlenecek.edit_text(f"🇬🇧 Size limit: {str(humanbytes(sizeLim))} yours: {humanbytes(toplamBoyut)}\n" + \
+		editMessage(
+			duzenlenecek,f"🇬🇧 Size limit: {str(humanbytes(sizeLim))} yours: {humanbytes(toplamBoyut)}\n" + \
 			f"If you want to be premium user, contact: @{Config.CHANNEL_OR_CONTACT}" + \
 			f"\n\n🇹🇷 Boyut limiti: {str(humanbytes(sizeLim))} seninki: {humanbytes(toplamBoyut)}\n" + \
 			f"Premium olmak istiyorsanız iletişim: @{Config.CHANNEL_OR_CONTACT}")
-		except Exception as h: LOGGER.info(str(h))
 		onTaskComplete()
 	
-	try: duzenlenecek.edit_text(f"{info}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
-	except: pass
+	editMessage(duzenlenecek,f"{info}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
 	indirmeBasladi = time.time()
+	LOGGER.info("Started ytdDownload")
 	ytdDownload(url, duzenlenecek, info)
 	indirmeBitti = time.time()
+	LOGGER.info("Finished ytdDownload")
 	LOGGER.info(url)
 	toup = os.listdir(outDir)
 	for filo in toup:
 		if filo.upper().endswith(IMAGE_SUFFIXES) or filo.upper().endswith(VIDEO_SUFFIXES): os.remove(os.path.join(outDir, filo))
-	toup = natsorted(os.listdir(outDir))
-	
+	toup = None
+	if Config.SORT_UPLOAD.lower() == 'creationdate': toup = sortModified(outDir)
+	elif Config.SORT_UPLOAD.lower() == 'normalsort': toup = sorted(os.listdir(outDir), reverse = False)
+	elif Config.SORT_UPLOAD.lower() == 'reversesort': toup = sorted(os.listdir(outDir), reverse = True)
+	elif Config.SORT_UPLOAD.lower() == 'naturalsort': toup = natsorted(os.listdir(outDir))
+	else: LOGGER.error("Please enter valid sorting algorithm. See Config file. Or just delete SORT_UPLOAD from your env values.")
 	LOGGER.info("#toup: " + ", ".join(toup))
 	toplamarsiv = str(len(toup))
 	indirilenBoyut = get_size(outDir)
 	editMessage(duzenlenecek,f"{info}🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}")
-	
+	LOGGER.info("Started upload")
 	c_time = time.time()
 	suan = 0
 	toplamGonderilen = 0
 	for filo in toup:
 		suan = suan + 1
 		kepsin = f'<a href="{Config.FLAME_URL}">🔥</a> {filo}\n`{url}`'
+		kepsin += f'\n#`{kendisi[0]}`'
+		kepsin += f'\n#{kendisi[1]}'
 		if int(toplamarsiv) != 1: kepsin += f'\n`{suan}.{toplamarsiv}`'
 		dosyaYolu = os.path.join(outDir, filo)
 		dosyaBoyutu = os.path.getsize(dosyaYolu)
@@ -159,8 +173,10 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 		f"🇹🇷 indirme süresi 🇬🇧 download time: {ReadableTime(indirmeBitti-indirmeBasladi)}\n" + \
 		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(time.time() - c_time)}\n" + \
 		f"🇹🇷 toplam süre 🇬🇧 total time: {ReadableTime(time.time() - indirmeBasladi)}\n" + \
-		f"🇹🇷 toplam dosya 🇬🇧 total file: {toplamarsiv}\n" + \
-		f'<a href="{duzenlenecek.link}">🇹🇷 indirici mesaj 🇬🇧 downloader</a>'
+		f"🇹🇷 toplam dosya 🇬🇧 total file: {toplamarsiv}\n"
+	if unavaiilableVideosMessage: texto += f"🇹🇷 kontrol et 🇬🇧 check: {unavaiilableVideosMessage.link}\n"
+	texto += f'<a href="{duzenlenecek.link}">🇹🇷 indirici mesaj 🇬🇧 downloader</a>'
+	LOGGER.info("Finished upload")
 	sendMessage(duzenlenecek,texto)
 	editMessage(duzenlenecek,texto)
 	onTaskComplete()

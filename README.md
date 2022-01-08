@@ -36,7 +36,8 @@
 
 - Youtube-DL downloading status
 - Fully customizable progressbar
-- Auto update ytdl with every request
+- Auto update ytdl with every download
+- Auot update all requirements with restart
 - Only one process in same time (for stabilization)
 - Embed thumbnail, metadata's to file
 - Custom ytdl format selector (dont change if you dont know)
@@ -49,6 +50,7 @@
 - Logger
 - Shell
 - Stats
+- Restart
 - Pinger
 </details>
 
@@ -71,12 +73,15 @@
 - `JOIN_CHANNEL_STR`: Join channel warning string. See `config.py`.
 - `YOU_ARE_BANNED_STR`: Banned user string. See `config.py`.
 - `JOIN_BUTTON_STR`: Join button string. See `config.py`.
+- `SORT_UPLOAD`: Sort files before upload. `creationdate` or `normalsort` or `naturalsort` or `reversesort`. Leave blank for playlist original sorting.
 - `VIDEO_LIMIT`: Max video limit. Example: `3`, `62`, `52` (give 0 for unlimited, default 0)
 - `VIDEO_LIMIT`: Max playlist size limit in bytes. (give 0 for unlimited, default 0)
 - `UPDATE_YTDL_EVERY_DOWNLOAD`: Give `True` if you want to update ytdl in every download command. Default `True`
+- `UPDATE_REQUIREMETS_EVERY_RESTART`: Give `True` if you want to update all requirements when restart. Default `True`
 - `SLEEP_BETWEEN_SEND_FILES`: For floodwait. Leave blank if you dont know.
 - `YTDL_DOWNLOAD_FORMAT`: Ytdl format selector. Leave blank if you dont know.
 - `SEND_LOGS_WHEN_DYING`: Send log.txt while exiting. Default `False`
+- `PREMIUM_USERS`: Premium user id's. Example: `100656 56191 50056561`
 - `VIDEO_LIMIT_FREE_USER`: 0: Unlimited. Default `False`
 - `VIDEO_LIMIT_PREMIUM_USER`: 0: Unlimited. Default `0`
 - `SIZE_LIMIT_FREE_USER`: 0: Unlimited. Default `0`
