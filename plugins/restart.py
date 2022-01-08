@@ -5,6 +5,7 @@ from pyrogram.types.messages_and_media.message import Message
 from HelperFunc.clean import cleanFiles
 from HelperFunc.messageFunc import sendMessage
 from HelperFunc.ytdl import clearVars
+from HelperFunc.updatePackage import updateRequirements
 from config import Config
 import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -18,6 +19,7 @@ def restart(client, message: Message):
     if not (Config.OWNER_ID != 0 and message.from_user.id == Config.OWNER_ID): return
     toSendStr = "🇹🇷 Yeniden Başlatıldı"
     toSendStr += "\n🇬🇧 Restarted"
+    updateRequirements('requirements.txt')
     clearVars()
     cleanFiles()
     sendMessage(message,toSendStr)
