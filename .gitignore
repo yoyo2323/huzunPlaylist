@@ -10,3 +10,5 @@ log.txt
 *.session
 musics/*
 *.session-journal
+test.txt
+deneme.py

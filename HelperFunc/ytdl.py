@@ -147,6 +147,7 @@ def ytdDownload(link, message:Message, info:str):
             'format': Config.YTDL_DOWNLOAD_FORMAT,
             'no_warnings': False,
             'ignoreerrors': True,
+            'skip_unavailable_fragments': True,
             'writethumbnail': True,
             'outtmpl': os.path.join(SAVE_PATH, "%(title)s.%(ext)s"),
             'progress_hooks': [my_hook],
@@ -180,6 +181,7 @@ def getVideoDetails(url:str, message:Message):
     mesaj = message
     ydl_opts = {
         'format': Config.YTDL_DOWNLOAD_FORMAT,
+        'skip_unavailable_fragments': True,
         'ignoreerrors': True
         }
     ydl:YoutubeDL = YoutubeDL(ydl_opts)
