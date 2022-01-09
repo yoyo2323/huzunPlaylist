@@ -72,7 +72,7 @@
 - `JOIN_CHANNEL_STR`: Join channel warning string. See `config.py`.
 - `YOU_ARE_BANNED_STR`: Banned user string. See `config.py`.
 - `JOIN_BUTTON_STR`: Join button string. See `config.py`.
-- `SORT_UPLOAD`: Sort files before upload. `creationdate` or `normalsort` or `naturalsort` or `reversesort`. Leave blank for playlist original sorting.
+- `SORT_UPLOAD`: Sort files before upload. `ContentModification` or `normalsort` or `MetadataChange` or `naturalsort` or `reversesort`. Leave blank for playlist original sorting.
 - `VIDEO_LIMIT`: Max video limit. Example: `3`, `62`, `52` (give 0 for unlimited, default 0)
 - `VIDEO_LIMIT`: Max playlist size limit in bytes. (give 0 for unlimited, default 0)
 - `UPDATE_YTDL_EVERY_DOWNLOAD`: Give `True` if you want to update ytdl in every download command. Default `True`

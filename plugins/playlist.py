@@ -12,7 +12,7 @@ from HelperFunc.forceSubscribe import ForceSubSync
 from HelperFunc.messageFunc import editMessage, sendAudio, sendDocument, sendMessage
 from HelperFunc.progressMulti import ReadableTime, humanbytes
 from HelperFunc.ytdl import clearVars, getVideoDetails, ytdDownload
-from HelperFunc.sort import sortModified
+from HelperFunc.sort import sortMostRecentContentModification, sortMostRecentMetadataChange
 from config import Config
 from HelperFunc.folderSize import get_size
 from HelperFunc.updatePackage import updatePipPackage
@@ -127,7 +127,8 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	for filo in toup:
 		if filo.upper().endswith(IMAGE_SUFFIXES) or filo.upper().endswith(VIDEO_SUFFIXES): os.remove(os.path.join(outDir, filo))
 	toup = None
-	if Config.SORT_UPLOAD.lower() == 'creationdate': toup = sortModified(outDir)
+	if Config.SORT_UPLOAD.lower() == 'contentmodification': toup = sortMostRecentContentModification(outDir)
+	elif Config.SORT_UPLOAD.lower() == 'metadatachange': toup = sortMostRecentMetadataChange(outDir)
 	elif Config.SORT_UPLOAD.lower() == 'normalsort': toup = sorted(os.listdir(outDir), reverse = False)
 	elif Config.SORT_UPLOAD.lower() == 'reversesort': toup = sorted(os.listdir(outDir), reverse = True)
 	elif Config.SORT_UPLOAD.lower() == 'naturalsort': toup = natsorted(os.listdir(outDir))

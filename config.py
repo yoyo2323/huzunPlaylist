@@ -54,10 +54,11 @@ class Config(object):
     SIZE_LIMIT_PREMIUM_USER = int(os.environ.get("SIZE_LIMIT_PREMIUM_USER", 0))
     PROCESS_PER_USER_PREMIUM_USER = int(os.environ.get('PROCESS_PER_USER_PREMIUM_USER', '0'))
     PROCESS_PER_USER_FREE_USER = int(os.environ.get('PROCESS_PER_USER_FREE_USER', '2'))
-    SORT_UPLOAD = str(os.environ.get("SORT_UPLOAD", "creationdate")) #
-    if not ((SORT_UPLOAD == 'creationdate') or (SORT_UPLOAD == 'normalsort') or (SORT_UPLOAD == 'naturalsort') or (SORT_UPLOAD == 'reversesort')):
-        LOGGER.error("Please enter valid sorting algorithm. See Config file. Or just delete SORT_UPLOAD from your env values.")
-        exit()
+    SORT_UPLOAD = str(os.environ.get("SORT_UPLOAD", "MetadataChange")).lower() #
+    normalValues = ['contentmodification', 'normalsort', 'naturalsort', 'metadatachange', 'reversesort']
+    if not SORT_UPLOAD in normalValues:
+        LOGGER.error("Please enter valid sorting algorithm. See Config file. Using default value now.")
+        SORT_UPLOAD = 'metadatachange'
     HELP_COMMANDS = ["start", "help", "about", "yardım", "h", "y"]
     if OWNER_ID != 0:
         AUTH_IDS.append(OWNER_ID)

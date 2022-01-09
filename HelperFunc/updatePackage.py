@@ -13,7 +13,7 @@ def updateRequirements(ilename:str):
     for req in reqs: updatePipPackage(req)
 
 def updatePipPackage(packName:str):
-    UPDATE_COMMAND = f"pip install {packName} --upgrade"
+    UPDATE_COMMAND = f"pip install {packName} -U"
     process = None
     try:
         process = subprocess.Popen(UPDATE_COMMAND,

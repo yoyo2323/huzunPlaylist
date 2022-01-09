@@ -8,6 +8,10 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
     level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
-def sortModified(path):
+def sortMostRecentContentModification(path):
     mtime = lambda f: os.stat(os.path.join(path, f)).st_mtime
+    return list(sorted(os.listdir(path), key=mtime))
+
+def sortMostRecentMetadataChange(path):
+    mtime = lambda f: os.stat(os.path.join(path, f)).st_ctime
     return list(sorted(os.listdir(path), key=mtime))
