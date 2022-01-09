@@ -45,12 +45,12 @@ def editMessage(toEditMessage: Message, editText: str, replyButtons:InlineKeyboa
     except Exception as e:
         LOGGER.info(str(e))
 
-def sendDocument(toReplyDocument: Message, filePath: str):
+def sendDocument(toReplyDocument: Message, filePath: str, capt=None):
     try:
-        return toReplyDocument.reply_document(filePath)
+        return toReplyDocument.reply_document(filePath,caption=capt)
     except FloodWait as e:
         time.sleep(e.x * 1.5)
-        return toReplyDocument.reply_document(filePath)
+        return toReplyDocument.reply_document(filePath,caption=capt)
     except Exception as e:
         LOGGER.info(str(e))
 

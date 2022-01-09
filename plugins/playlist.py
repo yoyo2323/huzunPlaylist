@@ -9,7 +9,7 @@ from HelperFunc.authUserCheck import AuthUserCheckSync
 from HelperFunc.clean import cleanFiles
 from natsort import natsorted
 from HelperFunc.forceSubscribe import ForceSubSync
-from HelperFunc.messageFunc import editMessage, sendAudio, sendMessage
+from HelperFunc.messageFunc import editMessage, sendAudio, sendDocument, sendMessage
 from HelperFunc.progressMulti import ReadableTime, humanbytes
 from HelperFunc.ytdl import clearVars, getVideoDetails, ytdDownload
 from HelperFunc.sort import sortModified
@@ -83,18 +83,11 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
 	if Config.UPDATE_YTDL_EVERY_DOWNLOAD: updatePipPackage("yt-dlp")
 	videolar = None
-	unavailables = None
-	try: videolar, kendisi, unavailables = getVideoDetails(url, duzenlenecek)
+	try: videolar, kendisi = getVideoDetails(url, duzenlenecek)
 	except TypeError as e:
 		LOGGER.info(str(e))
 		onTaskComplete()
-	unavaiilableVideosMessage = None
-	if unavailables:
-		uns = "\n".join(unavailables)
-		text = "🇹🇷 Kullanılamayan videolar indirilmeyecek."
-		text += "\n🇬🇧 Unavailable videos will be not downloaded."
-		text += f"\n\n{uns}"
-		unavaiilableVideosMessage = sendMessage(gelen,text)
+	
 	#video limit
 	vidLim = 0
 	if not gelen.from_user.id in Config.PREMIUM_USERS: vidLim = Config.VIDEO_LIMIT_FREE_USER
@@ -122,10 +115,24 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 		onTaskComplete()
 	
 	editMessage(duzenlenecek,f"{info}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
-	indirmeBasladi = time.time()
+	unavaiilableVideosMessage = None
 	LOGGER.info("Started ytdDownload")
-	ytdDownload(url, duzenlenecek, info)
+	indirmeBasladi = time.time()
+	res = ytdDownload(url, duzenlenecek, info)
 	indirmeBitti = time.time()
+
+	# unavailable videos
+	if res:
+		text = "🇹🇷 Kullanılamayan videolar indirilmedi."
+		text += "\n🇬🇧 Unavailable videos not downloaded."
+		kulvid = text + "\n\n" + "\n".join(res)
+		if len(kulvid) > 3000:
+			filename = 'unavailable.txt'
+			with open(filename, 'w') as file: file.write(kulvid)
+			unavaiilableVideosMessage = sendDocument(gelen,filename,capt=text)
+			os.remove(filename)
+		else: unavaiilableVideosMessage = sendMessage(gelen, kulvid)
+	
 	LOGGER.info("Finished ytdDownload")
 	LOGGER.info(url)
 	toup = os.listdir(outDir)

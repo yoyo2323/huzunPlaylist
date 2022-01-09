@@ -16,6 +16,7 @@ from yt_dlp import YoutubeDL, DownloadError
 
 SAVE_PATH = "musics"
 
+unavailableVideos = []
 videoCount = None
 infoMes = None
 mesaj = None
@@ -49,6 +50,7 @@ def clearVars():
     startTime = time.time()
 
 class YtdlLogger(object):
+    global unavailableVideos
     def debug(self, msg):
         #LOGGER.debug(f"YtdlLogger - {msg}")
         pass
@@ -57,6 +59,7 @@ class YtdlLogger(object):
         LOGGER.warning(f"YtdlLogger - {msg}")
 
     def error(self, msg):
+        if "video unavailable" in str(msg).lower(): unavailableVideos.append(msg)
         LOGGER.error(f"YtdlLogger - {msg}")
 
 def progress_for_ytdl(
@@ -132,7 +135,7 @@ def progressHook(d):
             pass
 
 def ytdDownload(link, message:Message, info:str):
-    global mesaj, startTime, infoMes
+    global mesaj, startTime, infoMes, unavailableVideos
     infoMes = info
     startTime = time.time()
     mesaj = message
@@ -143,6 +146,7 @@ def ytdDownload(link, message:Message, info:str):
             'ignoreerrors': True,
             # 'skip_unavailable_fragments': True,
             'writethumbnail': True,
+            'nocheckcertificate': True,
             'outtmpl': os.path.join(SAVE_PATH, "%(title)s.%(ext)s"),
             'progress_hooks': [progressHook],
             'logger': YtdlLogger(),
@@ -162,6 +166,8 @@ def ytdDownload(link, message:Message, info:str):
         }
         ydl:YoutubeDL = YoutubeDL(downloaderOptions)
         ydl.download([link])
+        if len(unavailableVideos) != 0: return unavailableVideos
+        else: return None
     except DownloadError as e:
         ExitWithException(mesaj, str(e), link)
         return
@@ -175,16 +181,15 @@ def getVideoDetails(url:str, message:Message):
     mesaj = message
     ydl_opts = {
         'format': Config.YTDL_DOWNLOAD_FORMAT,
+        'nocheckcertificate': True,
         # 'skip_unavailable_fragments': True,
         'ignoreerrors': True
         }
     ydl:YoutubeDL = YoutubeDL(ydl_opts)
     result = None
-    unavailableVideos = []
     try: result = ydl.extract_info(url, download=False) #We just want to extract the info
     except UnavailableVideoError as y:
         LOGGER.error(f"getVideoDetails - UnavailableVideoError: {str(y)}")
-        unavailableVideos.append(str(y))
     except Exception as t: LOGGER.error(f"getVideoDetails - Exception: {str(t)}")
     videolar = []
     if 'entries' in result:
@@ -234,6 +239,5 @@ def getVideoDetails(url:str, message:Message):
         ]
     videoCount = len(videolar)
     for x in range(len(videolar)): toplamBoyut = toplamBoyut + int(videolar[x][3])
-    if len(unavailableVideos) == 0: unavailableVideos = None
-    return videolar, kendisi, unavailableVideos
+    return videolar, kendisi
 
