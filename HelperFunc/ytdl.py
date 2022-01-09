@@ -16,7 +16,6 @@ from yt_dlp import YoutubeDL, DownloadError
 
 SAVE_PATH = "musics"
 
-unavailableVideos = []
 videoCount = None
 infoMes = None
 mesaj = None
@@ -50,7 +49,6 @@ def clearVars():
     startTime = time.time()
 
 class YtdlLogger(object):
-    global unavailableVideos
     def debug(self, msg):
         #LOGGER.debug(f"YtdlLogger - {msg}")
         pass
@@ -59,7 +57,6 @@ class YtdlLogger(object):
         LOGGER.warning(f"YtdlLogger - {msg}")
 
     def error(self, msg):
-        if "video unavailable" in str(msg).lower(): unavailableVideos.append(msg)
         LOGGER.error(f"YtdlLogger - {msg}")
 
 def progress_for_ytdl(
@@ -135,7 +132,7 @@ def progressHook(d):
             pass
 
 def ytdDownload(link, message:Message, info:str):
-    global mesaj, startTime, infoMes, unavailableVideos
+    global mesaj, startTime, infoMes
     infoMes = info
     startTime = time.time()
     mesaj = message
@@ -166,8 +163,6 @@ def ytdDownload(link, message:Message, info:str):
         }
         ydl:YoutubeDL = YoutubeDL(downloaderOptions)
         ydl.download([link])
-        if len(unavailableVideos) != 0: return unavailableVideos
-        else: return None
     except DownloadError as e:
         ExitWithException(mesaj, str(e), link)
         return

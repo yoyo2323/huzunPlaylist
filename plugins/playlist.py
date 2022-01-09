@@ -81,13 +81,15 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	info += f'\n- uptime: `{ReadableTime(time.time() - Config.botStartTime)}`\n\n'
 	text = info + "🇹🇷 inceleniyor.\nbu işlem her video için 1 saniye demektir.\neğer 60 videonuz varsa, 60 saniye bekleyin.\n\n"
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
+	editMessage(duzenlenecek, text)
 	if Config.UPDATE_YTDL_EVERY_DOWNLOAD: updatePipPackage("yt-dlp")
 	videolar = None
+	LOGGER.info("Started getVideoDetails")
 	try: videolar, kendisi = getVideoDetails(url, duzenlenecek)
 	except TypeError as e:
 		LOGGER.info(str(e))
 		onTaskComplete()
-	
+	LOGGER.info("Finished getVideoDetails")
 	#video limit
 	vidLim = 0
 	if not gelen.from_user.id in Config.PREMIUM_USERS: vidLim = Config.VIDEO_LIMIT_FREE_USER
@@ -115,24 +117,10 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 		onTaskComplete()
 	
 	editMessage(duzenlenecek,f"{info}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
-	unavaiilableVideosMessage = None
 	LOGGER.info("Started ytdDownload")
 	indirmeBasladi = time.time()
-	res = ytdDownload(url, duzenlenecek, info)
+	ytdDownload(url, duzenlenecek, info)
 	indirmeBitti = time.time()
-
-	# unavailable videos
-	if res:
-		text = "🇹🇷 Kullanılamayan videolar indirilmedi."
-		text += "\n🇬🇧 Unavailable videos not downloaded."
-		kulvid = text + "\n\n" + "\n".join(res)
-		if len(kulvid) > 3000:
-			filename = 'unavailable.txt'
-			with open(filename, 'w') as file: file.write(kulvid)
-			unavaiilableVideosMessage = sendDocument(gelen,filename,capt=text)
-			os.remove(filename)
-		else: unavaiilableVideosMessage = sendMessage(gelen, kulvid)
-	
 	LOGGER.info("Finished ytdDownload")
 	LOGGER.info(url)
 	toup = os.listdir(outDir)
@@ -181,9 +169,8 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 		f"🇹🇷 indirme süresi 🇬🇧 download time: {ReadableTime(indirmeBitti-indirmeBasladi)}\n" + \
 		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(time.time() - c_time)}\n" + \
 		f"🇹🇷 toplam süre 🇬🇧 total time: {ReadableTime(time.time() - indirmeBasladi)}\n" + \
-		f"🇹🇷 toplam dosya 🇬🇧 total file: {toplamarsiv}\n"
-	if unavaiilableVideosMessage: texto += f"🇹🇷 kontrol et 🇬🇧 check: {unavaiilableVideosMessage.link}\n"
-	texto += f'<a href="{duzenlenecek.link}">🇹🇷 indirici mesaj 🇬🇧 downloader</a>'
+		f"🇹🇷 toplam dosya 🇬🇧 total file: {toplamarsiv}\n" + \
+		f'<a href="{duzenlenecek.link}">🇹🇷 indirici mesaj 🇬🇧 downloader</a>'
 	LOGGER.info("Finished upload")
 	sendMessage(duzenlenecek,texto)
 	editMessage(duzenlenecek,texto)
