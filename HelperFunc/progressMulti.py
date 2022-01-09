@@ -34,8 +34,8 @@ async def progressMulti(
     current = realDownloaded + current
     now = time.time()
     diff = now - start
-    #if round(diff % 5.00) == 0 or current == total:
-    if round(current / total * 100, 0) % 10 == 0:
+    # if round(current / total * 100, 0) % 10 == 0:
+    if round(diff % 10.00) == 0 or current == total:
         percentage = current * 100 / realTotal
         speed = current / diff
         elapsed_time = round(diff) * 1000

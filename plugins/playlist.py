@@ -78,10 +78,10 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "WEBP", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO", "HEIC", "JPEG")
 
 	info = f"Bilgi / Info:\n\n- user: {gelen.from_user.mention()} (`{str(gelen.from_user.id)}`)\n- link: `{url}`"
-	info += f'\n- uptime: `{ReadableTime(time.time() - Config.botStartTime)}`\n\n'
+	info += '\n- uptime: `{}`\n\n'
 	text = info + "🇹🇷 inceleniyor.\nbu işlem her video için 1 saniye demektir.\neğer 60 videonuz varsa, 60 saniye bekleyin.\n\n"
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
-	editMessage(duzenlenecek, text)
+	editMessage(duzenlenecek, text.format(ReadableTime(time.time() - Config.botStartTime)))
 	if Config.UPDATE_YTDL_EVERY_DOWNLOAD: updatePipPackage("yt-dlp")
 	videolar = None
 	LOGGER.info("Started getVideoDetails")

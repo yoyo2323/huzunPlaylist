@@ -47,7 +47,7 @@ class Config(object):
     UPDATE_YTDL_EVERY_DOWNLOAD = str(os.environ.get("UPDATE_YTDL_EVERY_DOWNLOAD", "True")).lower() == 'true'
     UPDATE_REQUIREMETS_EVERY_RESTART = str(os.environ.get("UPDATE_REQUIREMETS_EVERY_RESTART", "True")).lower() == 'true'
     SEND_LOGS_WHEN_DYING = str(os.environ.get("SEND_LOGS_WHEN_DYING", "False")).lower() == 'true'
-    SLEEP_BETWEEN_SEND_FILES = int(os.environ.get("SLEEP_BETWEEN_SEND_FILES", 7))
+    SLEEP_BETWEEN_SEND_FILES = int(os.environ.get("SLEEP_BETWEEN_SEND_FILES", 3))
     VIDEO_LIMIT_FREE_USER = int(os.environ.get("VIDEO_LIMIT_FREE_USER", 0))
     SIZE_LIMIT_FREE_USER = int(os.environ.get("SIZE_LIMIT_FREE_USER", 0))
     VIDEO_LIMIT_PREMIUM_USER = int(os.environ.get("VIDEO_LIMIT_PREMIUM_USER", 0))

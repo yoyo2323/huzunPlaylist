@@ -4,7 +4,7 @@ import logging
 
 from yt_dlp.utils import UnavailableVideoError
 from HelperFunc.clean import cleanFiles
-from HelperFunc.progressMulti import TimeFormatter, humanbytes
+from HelperFunc.progressMulti import ReadableTime, TimeFormatter, humanbytes
 from pyrogram.types.messages_and_media.message import Message
 import os, time, math
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -66,12 +66,10 @@ def progress_for_ytdl(
 ):
     now = time.time()
     diff = now - start
-    if round(diff % 3, 0) == 0 or current == total:
+    if round(diff % 5.00) == 0 or current == total:
     #if round(current / total * 100, 0) % 5 == 0:
-        try:
-            percentage = current * 100 / total
-        except ZeroDivisionError:
-            percentage = 0
+        try: percentage = current * 100 / total
+        except ZeroDivisionError: percentage = 0
         speed = current / diff
         elapsed_time = round(diff) * 1000
         time_to_completion = round((total - current) / speed) * 1000
@@ -99,9 +97,10 @@ def progress_for_ytdl(
             time_to_completion if time_to_completion != '' else "0 s", # Remaining Time
             elapsed_time if elapsed_time != '' else "0 s" # Passed time
         ) + progressReverse 
+    else: return None
 
 def progressHook(d):
-    global mesaj, downloaded_bytes,last_downloaded,indirilen,progress, startTime, videoCount
+    global mesaj, downloaded_bytes,last_downloaded,indirilen,progress, startTime, videoCount, infoMes
     if d['status'] == 'finished':
         file_tuple = os.path.split(os.path.abspath(d['filename']))
         last_downloaded += os.path.getsize(d['filename'])
@@ -116,20 +115,16 @@ def progressHook(d):
         except ZeroDivisionError:
             progress = 0
         cp = progress_for_ytdl(downloaded_bytes, toplamBoyut, startTime)
-        if not cp: return
-
-        toedit = f"Şu an / At now:\n\n`- Sıra / Quee: {str(indirilen)}/{str(videoCount)}" + \
-            "\n- İnen / Downloading: " + os.path.split(os.path.abspath(d['filename']))[1] + \
-            "\n- Yüzde / Percent: " + d['_percent_str'] + \
-            "\n- Kalan / Remaining: " + d['_eta_str'] + \
-            "\n- Hız / Speed: " + d['_speed_str'] + \
-            "\n- Boyut / Size: " + d['_total_bytes_str'] + f"`\n\nToplam / Total:\n`{cp}`" + \
-            f"\n💎 @{Config.CHANNEL_OR_CONTACT}"
-        try:
-            global infoMes
-            mesaj.edit_text(infoMes + toedit, disable_web_page_preview=True)
-        except:
-            pass
+        if cp:
+            toedit = f"Şu an / At now:\n\n`- Sıra / Quee: {str(indirilen)}/{str(videoCount)}" + \
+                "\n- İnen / Downloading: " + os.path.split(os.path.abspath(d['filename']))[1] + \
+                "\n- Yüzde / Percent: " + d['_percent_str'] + \
+                "\n- Kalan / Remaining: " + d['_eta_str'] + \
+                "\n- Hız / Speed: " + d['_speed_str'] + \
+                "\n- Boyut / Size: " + d['_total_bytes_str'] + f"`\n\nToplam / Total:\n`{cp}`" + \
+                f"\n💎 @{Config.CHANNEL_OR_CONTACT}"
+            try: mesaj.edit_text(str(infoMes).format(ReadableTime(time.time() - Config.botStartTime)) + toedit, disable_web_page_preview=True)
+            except: pass
 
 def ytdDownload(link, message:Message, info:str):
     global mesaj, startTime, infoMes
@@ -225,13 +220,19 @@ def getVideoDetails(url:str, message:Message):
             str(result['acodec'])
         ])
     
-    kendisi = [str(result['id']),
-        str(result['channel_id']),
-        str(result['title']),
-        str(result['channel']),
-        str(result['channel_url']),
-        str(result['webpage_url'])
-        ]
+    kendisi = []
+    try: kendisi.append(str(result['id']))
+    except: kendisi.append(None)
+    try: kendisi.append(str(result['channel_id']))
+    except: kendisi.append(None)
+    try: kendisi.append(str(result['title']))
+    except: kendisi.append(None)
+    try: kendisi.append(str(result['channel']))
+    except: kendisi.append(None)
+    try: kendisi.append(str(result['channel_url']))
+    except: kendisi.append(None)
+    try: kendisi.append(str(result['webpage_url']))
+    except: kendisi.append(None)
     videoCount = len(videolar)
     for x in range(len(videolar)): toplamBoyut = toplamBoyut + int(videolar[x][3])
     return videolar, kendisi
