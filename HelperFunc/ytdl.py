@@ -114,7 +114,9 @@ def my_hook(d):
         file_tuple = os.path.split(os.path.abspath(d['filename']))
         last_downloaded += os.path.getsize(d['filename'])
         indirilen = indirilen + 1
-        LOGGER.info("Done downloading {}".format(file_tuple[1]))
+        LOGGER.info("Downloaded {}".format(file_tuple[1]))
+    if d['status'] == 'error':
+        LOGGER.error(f"Error when download: {d['filename']}")
     if d['status'] == 'downloading':
         downloaded_bytes = last_downloaded + d['downloaded_bytes']
         try:
@@ -147,7 +149,7 @@ def ytdDownload(link, message:Message, info:str):
             'format': Config.YTDL_DOWNLOAD_FORMAT,
             'no_warnings': False,
             'ignoreerrors': True,
-            'skip_unavailable_fragments': True,
+            # 'skip_unavailable_fragments': True,
             'writethumbnail': True,
             'outtmpl': os.path.join(SAVE_PATH, "%(title)s.%(ext)s"),
             'progress_hooks': [my_hook],
@@ -181,7 +183,7 @@ def getVideoDetails(url:str, message:Message):
     mesaj = message
     ydl_opts = {
         'format': Config.YTDL_DOWNLOAD_FORMAT,
-        'skip_unavailable_fragments': True,
+        # 'skip_unavailable_fragments': True,
         'ignoreerrors': True
         }
     ydl:YoutubeDL = YoutubeDL(ydl_opts)
@@ -196,6 +198,7 @@ def getVideoDetails(url:str, message:Message):
     if 'entries' in result:
         video = result['entries']
         for i, item in enumerate(video):
+            if not result['entries'][i]: continue # not available videos
             videolar.append([
                 'playlist',
                 str(result['entries'][i]['id']),

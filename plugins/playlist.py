@@ -148,8 +148,8 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	for filo in toup:
 		suan = suan + 1
 		kepsin = f'<a href="{Config.FLAME_URL}">🔥</a> {filo}\n`{url}`'
-		kepsin += f'\n#`{kendisi[0]}`'
-		kepsin += f'\n#{kendisi[1]}'
+		kepsin += f'\n`{kendisi[2]}`'
+		kepsin += f'\n`{kendisi[0]}`'
 		if int(toplamarsiv) != 1: kepsin += f'\n`{suan}.{toplamarsiv}`'
 		dosyaYolu = os.path.join(outDir, filo)
 		dosyaBoyutu = os.path.getsize(dosyaYolu)
