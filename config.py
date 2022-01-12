@@ -17,7 +17,8 @@ class Config(object):
     FINISHED_PROGRESS_STR = os.environ.get('FINISHED_PROGRESS_STR','●')
     UN_FINISHED_PROGRESS_STR = os.environ.get('UN_FINISHED_PROGRESS_STR','○')
     PROGRESS = "🔥 Biten Yüzde / Percent: % {0}\n📀 Toplam Boyut / Total Size: {1}\n📤 Biten Boyut / Finished: {2}\n" + \
-        "📥 Kalan Boyut / Remaining: {3}\n⚡️ Anlık Hız / Speed: {4}/s\n⏳ Tahmini Süre / Estimated: {5}\n⏰ Kalan Süre / Remaining: {6}\n⌛️ Geçen Süre / Passed: {7}"
+        "📥 Kalan Boyut / Remaining: {3}\n⚡️ Anlık Hız / Speed: {4}/s\n⏳ Tahmini Süre / Estimated: {5} " + \
+        "\n⏰ Kalan Süre / Remaining: {6}\n⌛️ Geçen Süre / Passed: {7}\n🍁 Ömür / Uptime: {8}"
     PROGRESSBAR_LENGTH = int(os.environ.get('PROGRESSBAR_LENGTH', 25))
     JOIN_CHANNEL_STR = os.environ.get('JOIN_CHANNEL_STR',
         "Merhaba / Hi {}\n\n" + \
@@ -39,6 +40,7 @@ class Config(object):
     TG_SPLIT_SIZE = int(os.environ.get("TG_SPLIT_SIZE", "2097151000"))
     MUSIC_COMMAND = [os.environ.get('MUSIC_COMMAND','music')]
     RESTART_COMMAND = [os.environ.get('RESTART_COMMAND','restart')]
+    STATUS_COMMAND = [os.environ.get('STATUS_COMMAND','status')]
     SHELL_COMMAND = [os.environ.get('SHELL_COMMAND','shell')]
     FLAME_URL = os.environ.get('FLAME_URL','https://github.com/HuzunluArtemis/PlaylistAudioBot')
     PING_COMMAND = [os.environ.get('PING_COMMAND','ping')]
@@ -65,7 +67,7 @@ class Config(object):
         PREMIUM_USERS.append(OWNER_ID)
     if not BOT_USERNAME.startswith('@'): BOT_USERNAME = '@' + BOT_USERNAME # bu satıra dokunmayın.
     # komutları kopyala
-    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND, MUSIC_COMMAND, SHELL_COMMAND, STATS_COMMAND, RESTART_COMMAND]
+    AllCom = [LOG_COMMAND,HELP_COMMANDS, PING_COMMAND, MUSIC_COMMAND, SHELL_COMMAND, STATS_COMMAND, RESTART_COMMAND, STATUS_COMMAND]
     for ComS in AllCom:
         Lier = ComS.copy()
         for p in Lier:

@@ -77,9 +77,11 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	AUDIO_SUFFIXES = ("MP3", "M4A", "M4B", "FLAC", "WAV", "AIF", "OGG", "AAC", "DTS", "MID", "AMR", "MKA")
 	IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "WEBP", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO", "HEIC", "JPEG")
 
-	info = f"Bilgi / Info:\n\n- user: {gelen.from_user.mention()} (`{str(gelen.from_user.id)}`)\n- link: `{url}`"
-	info += '\n- uptime: `{}`\n\n'
-	text = info + "🇹🇷 inceleniyor.\nbu işlem her video için 1 saniye demektir.\neğer 60 videonuz varsa, 60 saniye bekleyin.\n\n"
+	infoMessageWithUptime = f"Bilgi / Info:\n\n- user: {gelen.from_user.mention()} (`{str(gelen.from_user.id)}`)"
+	infoMessageWithUptime += f"\n- link: `{url}`"
+	infoMessageWithoutUptime = infoMessageWithUptime
+	infoMessageWithUptime += '\n- uptime: `{}`\n\n'
+	text = infoMessageWithUptime + "🇹🇷 inceleniyor.\nbu işlem her video için 1 saniye demektir.\neğer 60 videonuz varsa, 60 saniye bekleyin.\n\n"
 	text += "🇬🇧 i am looking for you.\nthis means 1 second for each video.\nif you have 60 videos, wait 60 seconds.\n"
 	editMessage(duzenlenecek, text.format(ReadableTime(time.time() - Config.botStartTime)))
 	if Config.UPDATE_YTDL_EVERY_DOWNLOAD: updatePipPackage("yt-dlp")
@@ -116,27 +118,35 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 			f"Premium olmak istiyorsanız iletişim: @{Config.CHANNEL_OR_CONTACT}")
 		onTaskComplete()
 	
-	editMessage(duzenlenecek,f"{info}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
+	editMessage(duzenlenecek, f"{infoMessageWithUptime.format(ReadableTime(time.time() - Config.botStartTime))}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
 	LOGGER.info("Started ytdDownload")
+	
+	# downloading
 	indirmeBasladi = time.time()
-	ytdDownload(url, duzenlenecek, info)
+	ytdDownload(url, duzenlenecek, infoMessageWithoutUptime)
 	indirmeBitti = time.time()
 	LOGGER.info("Finished ytdDownload")
 	LOGGER.info(url)
+
+	# delete unecessaries
 	toup = os.listdir(outDir)
 	for filo in toup:
 		if filo.upper().endswith(IMAGE_SUFFIXES) or filo.upper().endswith(VIDEO_SUFFIXES): os.remove(os.path.join(outDir, filo))
+
+	# sorting
 	toup = None
 	if Config.SORT_UPLOAD.lower() == 'contentmodification': toup = sortMostRecentContentModification(outDir)
 	elif Config.SORT_UPLOAD.lower() == 'metadatachange': toup = sortMostRecentMetadataChange(outDir)
 	elif Config.SORT_UPLOAD.lower() == 'normalsort': toup = sorted(os.listdir(outDir), reverse = False)
 	elif Config.SORT_UPLOAD.lower() == 'reversesort': toup = sorted(os.listdir(outDir), reverse = True)
 	elif Config.SORT_UPLOAD.lower() == 'naturalsort': toup = natsorted(os.listdir(outDir))
-	else: LOGGER.error("Please enter valid sorting algorithm. See Config file. Or just delete SORT_UPLOAD from your env values.")
+	else: LOGGER.error("Please enter valid sorting algorithm. See Config file. Using default value now.")
+
+	# upload
 	LOGGER.info("#toup: " + ", ".join(toup))
 	toplamarsiv = str(len(toup))
 	indirilenBoyut = get_size(outDir)
-	editMessage(duzenlenecek,f"{info}🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}")
+	editMessage(duzenlenecek,f"{infoMessageWithUptime.format(ReadableTime(time.time() - Config.botStartTime))}🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}")
 	LOGGER.info("Started upload")
 	c_time = time.time()
 	suan = 0
@@ -154,7 +164,7 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 			continue
 		if filo.upper().endswith(AUDIO_SUFFIXES):
 			try:
-				prog = f"{info}Dosyalar / Files:\n\n- mesaj: {duzenlenecek.link}\n" + \
+				prog = f"{infoMessageWithoutUptime}Dosyalar / Files:\n\n- mesaj: {duzenlenecek.link}\n" + \
 				f"- anlık sıra / file quee: {str(suan)}/{toplamarsiv}\n" + \
 				f"- yüklenen / uploading:\n`{filo}`"
 				sendAudio(duzenlenecek,dosyaYolu,kepsin,prog,duzenlenecek,c_time,indirilenBoyut,toplamGonderilen)
@@ -165,7 +175,9 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 				LOGGER.error("Exception:" + str(e))
 				onTaskComplete()
 		toplamGonderilen = toplamGonderilen + dosyaBoyutu
-	texto = f"{info}🇹🇷 yükleme bitti 🇬🇧 done uploading.\n" + \
+
+	# info messages
+	texto = f"{infoMessageWithUptime.format(ReadableTime(time.time() - Config.botStartTime))}🇹🇷 yükleme bitti 🇬🇧 done uploading.\n" + \
 		f"🇹🇷 toplam inen 🇬🇧 total down: {humanbytes(int(indirilenBoyut))}\n" + \
 		f"🇹🇷 indirme süresi 🇬🇧 download time: {ReadableTime(indirmeBitti-indirmeBasladi)}\n" + \
 		f"🇹🇷 yükleme süresi 🇬🇧 upload time: {ReadableTime(time.time() - c_time)}\n" + \
@@ -176,3 +188,13 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 	sendMessage(duzenlenecek,texto)
 	editMessage(duzenlenecek,texto)
 	onTaskComplete()
+
+@Client.on_message(filters.command(Config.STATUS_COMMAND))
+def status(client, message: Message):
+	if not AuthUserCheckSync(message): return
+	if ForceSubSync(client, message) == 400: return
+	too = ""
+	if len(quee) != 0: too += f"🇹🇷 Yapacak {str(len(quee))} tane daha işim var\n🇬🇧 I have {str(len(quee))} more things to do"
+	else: too += "🇹🇷 Boşum. 🇬🇧 I'm empty"
+	too += f"\n🍁 Ömür / Uptime: {ReadableTime(time.time() - Config.botStartTime)}"
+	sendMessage(message,too)

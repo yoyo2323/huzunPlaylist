@@ -95,7 +95,8 @@ def progress_for_ytdl(
             humanbytes(speed), # Speed
             estimated_total_time if estimated_total_time != '' else "0 s", # Estimated Time
             time_to_completion if time_to_completion != '' else "0 s", # Remaining Time
-            elapsed_time if elapsed_time != '' else "0 s" # Passed time
+            elapsed_time if elapsed_time != '' else "0 s", # Passed time
+            ReadableTime(time.time() - Config.botStartTime)
         ) + progressReverse 
     else: return None
 
@@ -116,14 +117,16 @@ def progressHook(d):
             progress = 0
         cp = progress_for_ytdl(downloaded_bytes, toplamBoyut, startTime)
         if cp:
-            toedit = f"Şu an / At now:\n\n`- Sıra / Quee: {str(indirilen)}/{str(videoCount)}" + \
+            toedit = infoMes
+            toedit += f"Şu an / At now:\n\n`- Sıra / Quee: {str(indirilen)}/{str(videoCount)}" + \
                 "\n- İnen / Downloading: " + os.path.split(os.path.abspath(d['filename']))[1] + \
                 "\n- Yüzde / Percent: " + d['_percent_str'] + \
                 "\n- Kalan / Remaining: " + d['_eta_str'] + \
                 "\n- Hız / Speed: " + d['_speed_str'] + \
                 "\n- Boyut / Size: " + d['_total_bytes_str'] + f"`\n\nToplam / Total:\n`{cp}`" + \
                 f"\n💎 @{Config.CHANNEL_OR_CONTACT}"
-            try: mesaj.edit_text(str(infoMes).format(ReadableTime(time.time() - Config.botStartTime)) + toedit, disable_web_page_preview=True)
+            toedit = toedit.format(ReadableTime(time.time() - Config.botStartTime))
+            try: mesaj.edit_text(toedit, disable_web_page_preview=True)
             except: pass
 
 def ytdDownload(link, message:Message, info:str):
@@ -174,7 +177,7 @@ def getVideoDetails(url:str, message:Message):
         'nocheckcertificate': True,
         # 'skip_unavailable_fragments': True,
         'ignoreerrors': True
-        }
+    }
     ydl:YoutubeDL = YoutubeDL(ydl_opts)
     result = None
     try: result = ydl.extract_info(url, download=False) #We just want to extract the info

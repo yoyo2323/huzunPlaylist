@@ -62,7 +62,8 @@ async def progressMulti(
             humanbytes(speed), # Speed
             estimated_total_time if estimated_total_time != '' else "0 s", # Estimated Time
             time_to_completion if time_to_completion != '' else "0 s", # Remaining Time
-            elapsed_time if elapsed_time != '' else "0 s" # Passed time
+            elapsed_time if elapsed_time != '' else "0 s", # Passed time
+            ReadableTime(time.time() - Config.botStartTime)
         ) + progressReverse 
         try:
             await message.edit(text=f"{ud_type}\n`{tmp}`" + f"\n💎 @{Config.CHANNEL_OR_CONTACT}")
