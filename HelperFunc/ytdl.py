@@ -118,7 +118,7 @@ def progressHook(d):
         cp = progress_for_ytdl(downloaded_bytes, toplamBoyut, startTime)
         if cp:
             toedit = infoMes
-            toedit += f"Şu an / At now:\n\n`- Sıra / Quee: {str(indirilen)}/{str(videoCount)}" + \
+            toedit += f"\n\nŞu an / At now:\n\n`- Sıra / Quee: {str(indirilen)}/{str(videoCount)}" + \
                 "\n- İnen / Downloading: " + os.path.split(os.path.abspath(d['filename']))[1] + \
                 "\n- Yüzde / Percent: " + d['_percent_str'] + \
                 "\n- Kalan / Remaining: " + d['_eta_str'] + \
