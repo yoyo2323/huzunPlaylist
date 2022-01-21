@@ -1,6 +1,5 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 
-import asyncio
 import logging
 import time
 from pyrogram.errors.exceptions.bad_request_400 import MessageNotModified
