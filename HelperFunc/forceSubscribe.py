@@ -48,8 +48,7 @@ async def ForceSub(bot: Client, event: Message):
                     reply_to_message_id = event.message_id
                 )
                 return 400
-            else:
-                return 200
+            return 200
         except UserNotParticipant:
             await event.reply_text(
                 text=Config.JOIN_CHANNEL_STR.format(event.from_user.mention),
@@ -112,8 +111,7 @@ def ForceSubSync(bot: Client, event: Message):
                     reply_to_message_id = event.message_id
                 )
                 return 400
-            else:
-                return 200
+            return 200
         except UserNotParticipant:
             event.reply_text(
                 text=Config.JOIN_CHANNEL_STR.format(event.from_user.mention),
