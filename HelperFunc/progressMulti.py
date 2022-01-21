@@ -41,7 +41,7 @@ async def progressMulti(
         elapsed_time = round(diff) * 1000
         time_to_completion = round((realTotal - current) / speed) * 1000
         estimated_total_time = elapsed_time + time_to_completion
-        
+
         time_to_completion = TimeFormatter(milliseconds=time_to_completion)
         elapsed_time = TimeFormatter(milliseconds=elapsed_time)
         estimated_total_time = TimeFormatter(milliseconds=estimated_total_time)
