@@ -6,7 +6,9 @@ from yt_dlp.utils import UnavailableVideoError
 from HelperFunc.clean import cleanFiles
 from HelperFunc.progressMulti import ReadableTime, TimeFormatter, humanbytes
 from pyrogram.types.messages_and_media.message import Message
-import os, time, math
+import os
+import time
+import math
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
     level=logging.INFO)
