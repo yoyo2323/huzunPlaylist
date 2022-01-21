@@ -22,4 +22,3 @@ def cleanFiles(exiting = False):
         os.rmdir("musics")
     except:
         pass
-    

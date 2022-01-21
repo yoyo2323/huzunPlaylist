@@ -72,7 +72,7 @@ def onTaskComplete():
 	# hepsinin ilk değeri mesaj, ikincisi düzenlenecek mesaj, üçüncüsü url.
 
 def addTask(gelen: Message, duzenlenecek:Message, url:str):
-	
+
 	VIDEO_SUFFIXES = ("MKV", "MP4", "MOV", "WMV", "3GP", "MPG", "WEBM", "AVI", "FLV", "M4V", "GIF")
 	AUDIO_SUFFIXES = ("MP3", "M4A", "M4B", "FLAC", "WAV", "AIF", "OGG", "AAC", "DTS", "MID", "AMR", "MKA")
 	IMAGE_SUFFIXES = ("JPG", "JPX", "PNG", "WEBP", "CR2", "TIF", "BMP", "JXR", "PSD", "ICO", "HEIC", "JPEG")
@@ -117,10 +117,10 @@ def addTask(gelen: Message, duzenlenecek:Message, url:str):
 			f"\n\n🇹🇷 Boyut limiti: {str(humanbytes(sizeLim))} seninki: {humanbytes(toplamBoyut)}\n" + \
 			f"Premium olmak istiyorsanız iletişim: @{Config.CHANNEL_OR_CONTACT}")
 		onTaskComplete()
-	
+
 	editMessage(duzenlenecek, f"{infoMessageWithUptime.format(ReadableTime(time.time() - Config.botStartTime))}🇹🇷 indirilecek 🇬🇧 will down: {humanbytes(int(toplamBoyut))}")
 	LOGGER.info("Started ytdDownload")
-	
+
 	# downloading
 	indirmeBasladi = time.time()
 	ytdDownload(url, duzenlenecek, infoMessageWithoutUptime)

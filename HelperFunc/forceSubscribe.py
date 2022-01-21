@@ -17,7 +17,7 @@ async def ForceSub(bot: Client, event: Message):
     """
     Custom Pyrogram Based Telegram Bot's Force Subscribe Function by @viharasenindu.
     If User is not Joined Force Sub Channel Bot to Send a Message & ask him to Join First.
-    
+
     :param bot: Pass Client.
     :param event: Pass Message.
     :return: It will return 200 if Successfully Got User in Force Sub Channel and 400 if Found that User Not Participant in Force Sub Channel or User is Kicked from Force Sub Channel it will return 400. Also it returns 200 if Unable to Find Channel.
@@ -81,7 +81,7 @@ def ForceSubSync(bot: Client, event: Message):
     """
     Custom Pyrogram Based Telegram Bot's Force Subscribe Function by @viharasenindu.
     If User is not Joined Force Sub Channel Bot to Send a Message & ask him to Join First.
-    
+
     :param bot: Pass Client.
     :param event: Pass Message.
     :return: It will return 200 if Successfully Got User in Force Sub Channel and 400 if Found that User Not Participant in Force Sub Channel or User is Kicked from Force Sub Channel it will return 400. Also it returns 200 if Unable to Find Channel.

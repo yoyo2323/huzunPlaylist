@@ -11,7 +11,7 @@ class Config(object):
     API_HASH = os.environ.get("API_HASH", "")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     BOT_USERNAME = os.environ.get("BOT_USERNAME", "") # dont touch
-    
+
     UPDATES_CHANNEL = os.environ.get("UPDATES_CHANNEL", 'HuzunluArtemis')
     CHANNEL_OR_CONTACT = os.environ.get("CHANNEL_OR_CONTACT", 'HuzunluArtemis')
     FINISHED_PROGRESS_STR = os.environ.get('FINISHED_PROGRESS_STR','●')
