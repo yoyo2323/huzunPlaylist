@@ -4,7 +4,8 @@ from pyrogram import Client, filters
 from pyrogram.types.messages_and_media.message import Message
 from HelperFunc.messageFunc import sendDocument, sendMessage
 from config import Config
-import subprocess, logging
+import subprocess
+import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
     level=logging.INFO)

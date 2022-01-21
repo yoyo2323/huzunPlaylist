@@ -1,7 +1,8 @@
 # HuzunluArtemis - 2021 (Licensed under GPL-v3)
 # https://stackoverflow.com/questions/4500564/directory-listing-based-on-time/4500607#4500607
 
-import logging, os
+import logging
+import os
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],

@@ -2,7 +2,8 @@
 
 from HelperFunc.progressMulti import ReadableTime
 from config import Config
-import logging, time
+import logging
+import time
 from pyrogram import Client, __version__
 from pyrogram.raw.all import layer
 from HelperFunc.clean import cleanFiles

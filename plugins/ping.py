@@ -5,7 +5,8 @@ from HelperFunc.forceSubscribe import ForceSubSync
 from HelperFunc.messageFunc import editMessage, sendMessage
 from config import Config
 from pyrogram.types.messages_and_media.message import Message
-import logging, time
+import logging
+import time
 from HelperFunc.authUserCheck import AuthUserCheck, AuthUserCheckSync
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[logging.FileHandler('log.txt'), logging.StreamHandler()],
