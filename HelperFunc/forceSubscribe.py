@@ -39,7 +39,7 @@ async def ForceSub(bot: Client, event: Message):
             return 200
         try:
             user = await bot.get_chat_member(chat_id=(int(Config.FORCE_SUBSCRIBE_CHANNEL) if Config.FORCE_SUBSCRIBE_CHANNEL.startswith("-100") else Config.FORCE_SUBSCRIBE_CHANNEL), user_id=event.from_user.id)
-            if user.status == "kicked":
+            if user.status == "banned":
                 await event.reply_text(
                     text=Config.YOU_ARE_BANNED_STR.format(Config.CHANNEL_OR_CONTACT),
                     parse_mode = 'html',
@@ -102,7 +102,7 @@ def ForceSubSync(bot: Client, event: Message):
             return 200
         try:
             user = bot.get_chat_member(chat_id=(int(Config.FORCE_SUBSCRIBE_CHANNEL) if Config.FORCE_SUBSCRIBE_CHANNEL.startswith("-100") else Config.FORCE_SUBSCRIBE_CHANNEL), user_id=event.from_user.id)
-            if user.status == "kicked":
+            if user.status == "banned":
                 event.reply_text(
                     text=Config.YOU_ARE_BANNED_STR.format(Config.CHANNEL_OR_CONTACT),
                     parse_mode = 'html',
