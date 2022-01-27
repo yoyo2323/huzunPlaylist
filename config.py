@@ -59,6 +59,8 @@ class Config(object):
     PROCESS_PER_USER_PREMIUM_USER = int(os.environ.get('PROCESS_PER_USER_PREMIUM_USER', '0'))
     PROCESS_PER_USER_FREE_USER = int(os.environ.get('PROCESS_PER_USER_FREE_USER', '2'))
     SORT_UPLOAD = str(os.environ.get("SORT_UPLOAD", "MetadataChange")).lower() #
+    HEROKU_API_KEY = os.environ.get('HEROKU_API_KEY', None)
+    HEROKU_APP_NAME = os.environ.get('HEROKU_APP_NAME', None)
     normalValues = ['contentmodification', 'normalsort', 'naturalsort', 'metadatachange', 'reversesort']
     if not SORT_UPLOAD in normalValues:
         LOGGER.error("Please enter valid sorting algorithm. See Config file. Using default value now.")

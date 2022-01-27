@@ -3,3 +3,4 @@ TgCrypto
 psutil
 yt-dlp
 natsort
+heroku3

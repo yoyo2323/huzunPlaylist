@@ -48,9 +48,11 @@
 - Quee
 - Logger
 - Shell
-- Stats
-- Restart
 - Pinger
+- Stats (with dyno stats)
+- Normal Restart / Dyno Restart / Kill App (for heroku)
+  - Usage: /restart dyno.
+  - Usage: /restart kill. This will kill your app for save dyno hours.
 </details>
 
 ## Setting up config file
