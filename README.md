@@ -97,7 +97,7 @@
 
 <b>Deploy to Heroku:</b>
 
-- [Open me in new tab](https://heroku.com/deploy?template=https://github.com/HuzunluArtemis/PlaylistAudioBot)
+- [Open me in new tab](https://heroku.com/deploy?template=https://github.com/yoyo2323/huzunPlaylist)
 - Fill required variables
 - Fill app name (or dismiss)
 - Make you sure building with Dockerfile (as container. not heroku-18 or heroku-20)
